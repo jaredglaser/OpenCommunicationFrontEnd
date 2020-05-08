@@ -7,4 +7,19 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Test';
+
+  //TODO Determine whether or not user is logged in
+  get loggedIn(): boolean {
+    return null;
+  }
+
+  //TODO sign user out
+  signOut(): void{
+
+  }
+
+
+
 }
+
+
