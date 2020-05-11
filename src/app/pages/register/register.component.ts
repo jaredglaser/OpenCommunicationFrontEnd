@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { NgForm } from '@angular/forms';
 import { Globals } from 'src/app/Globals';
 
 
@@ -18,12 +17,12 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
   }
  
-  register(form : NgForm){
+  register(form : any){
     var user = (<HTMLInputElement>document.getElementById("username")).value;
     var pwd = (<HTMLInputElement>document.getElementById("pwd")).value;
     
     this.http.post<any>(Globals.ip+":"+Globals.port+"/api/security/register",{username : form.controls.username, password : form.controls.pwd}).subscribe( data => {
-        alert(data);
+        alert(JSON.stringify(data));
     })
 
   }

@@ -1,12 +1,13 @@
-<h2 id="heading">Create Account</h2>
-<form #registerform="ngForm" (ngSubmit)="register(registerform)">
+<h2>Create Account</h2>
+{{register_form.value | json }}
+<form #register_form="ngForm" (ngSubmit)="register(register_form.value)">
     <div class="form-group">
         <label for="username">Username:</label>
-        <input type="text" class="form-control" id="username" style="width:200px">
+        <input name="username" type="text" class="form-control" id="username" style="width:200px" ngModel>
     </div>
     <div class="form-group">
         <label for="pwd">Password:</label>
-        <input type="password" class="form-control" id="pwd" style="width:200px">
+        <input name="password" type="password" class="form-control" id="pwd" style="width:200px" ngModel>
     </div>
-    <button id="submit" type="submit" class="btn btn-info">Create Account</button>
+    <button id="register" type="submit" class="btn btn-info">Create Account</button>
 </form>
