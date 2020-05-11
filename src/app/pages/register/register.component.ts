@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import * as $ from 'jquery';
+
 
 
 
@@ -22,7 +22,7 @@ export class RegisterComponent implements OnInit {
     var user = (<HTMLInputElement>document.getElementById("username")).value;
     var pwd = (<HTMLInputElement>document.getElementById("pwd")).value;
     document.getElementById("heading").innerHTML = user;
-    
+    /*
     $.ajax({
       type: "post",
       url: "localhost:3000/api/security/register",
@@ -35,6 +35,7 @@ export class RegisterComponent implements OnInit {
       }
     });
     console.log("ajax register post sent");
+    */
   }
 
 
