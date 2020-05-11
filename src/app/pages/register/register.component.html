@@ -1,5 +1,5 @@
 <h2 id="heading">Create Account</h2>
-<form method="POST">
+<form #registerform="ngForm" (ngSubmit)="register(registerform)">
     <div class="form-group">
         <label for="username">Username:</label>
         <input type="text" class="form-control" id="username" style="width:200px">
@@ -8,5 +8,5 @@
         <label for="pwd">Password:</label>
         <input type="password" class="form-control" id="pwd" style="width:200px">
     </div>
-    <button id="submit" (click)="register()" type="button" class="btn btn-info">Create Account</button>
+    <button id="submit" type="submit" class="btn btn-info">Create Account</button>
 </form>
