@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Globals } from 'src/app/Globals';
 import { NgForm } from '@angular/forms';
 
@@ -17,7 +17,12 @@ export class LoginComponent implements OnInit {
   }
 
   login(form : NgForm){
-    this.http.post<any>(Globals.ip+":"+Globals.port+"/api/security/login",{username : form.controls.username, password : form.controls.password}).subscribe( data => {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    };
+    this.http.post<any>(Globals.ip+":"+Globals.port+"/api/security/login",{username : form.controls.username, password : form.controls.password},httpOptions).subscribe( data => {
       alert(data);
     })
   }
