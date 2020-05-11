@@ -1,6 +1,17 @@
+{{username}}
+<div>
 <ul>
     <li *ngFor="let server of servers">
       <span >{{server.id}}</span> {{server.name}}
     </li>
   </ul>
+
+</div>
+<div id="voice-chat">
+  <div id="active-users">
+    <ul *ngFor = "let user of activeusers">
+      <span>{{user.username}}</span>
+    </ul>
+  </div>
+</div>
   
