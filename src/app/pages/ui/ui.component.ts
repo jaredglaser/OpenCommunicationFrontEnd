@@ -8,6 +8,11 @@ class server{
   name : string;
 }
 
+class user{
+  id : number;
+  username: string;
+}
+
 const SERVERS: server[] = [
   { id: 11, name: 'myserver' },
   { id: 12, name: 'aserver' },
@@ -21,6 +26,8 @@ const SERVERS: server[] = [
 })
 export class UIComponent implements OnInit {
   servers = SERVERS;
+  activeusers = [{id:1,name: "testuser"}];
+  username = localStorage.getItem('username');
   constructor() { }
 
 
