@@ -4,7 +4,6 @@ import { NgForm } from '@angular/forms';
 import { Globals } from 'src/app/Globals';
 
 
-
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -26,6 +25,7 @@ export class RegisterComponent implements OnInit {
     this.http.post<any>(Globals.ip+":"+Globals.port+"/api/security/register",{username : form.controls.username, password : form.controls.pwd}).subscribe( data => {
         alert(data);
     })
+
   }
     
 }

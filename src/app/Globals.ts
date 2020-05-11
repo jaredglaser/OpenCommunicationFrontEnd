@@ -1,4 +1,4 @@
 export const Globals = {
-    ip : "localhost",
+    ip : "http://localhost",
     port : "3000"
   }
