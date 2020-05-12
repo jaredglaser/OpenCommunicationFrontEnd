@@ -27,3 +27,8 @@
 .rooms {
     overflow: scroll
 }
+
+.rooms-servers {
+    color: cornflowerblue;
+    font-weight: bold;
+}
