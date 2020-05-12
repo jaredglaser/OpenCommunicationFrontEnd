@@ -1,17 +1,41 @@
-{{username}}
-<div>
-<ul>
-    <li *ngFor="let server of servers">
-      <span >{{server.id}}</span> {{server.name}}
-    </li>
-  </ul>
+<!DOCTYPE html>
+<head>
+  <link rel="stylesheet" type="text/css" href="ui.component.css">
+</head>
 
-</div>
-<div id="voice-chat">
-  <div id="active-users">
-    <ul *ngFor = "let user of activeusers">
-      <span>{{user.username}}</span>
-    </ul>
+<body>
+  {{username}}
+  <div class="row">
+    <div class="column left">
+      <h3 class="header">Servers</h3>
+      <ul class="servers">
+        <li *ngFor="let server of servers">
+          <span class="rooms-servers">{{server.id}}</span> {{server.name}}
+        </li>
+      </ul>
+
+      <h3 class="header">Rooms</h3>
+      <ul class="rooms">
+        <li *ngFor="let room of rooms">
+          <span class="rooms-servers">{{room.id}}</span> {{room.name}}
+        </li>
+      </ul>
+    </div>
+    
+    <div class="column middle">
+      <h3 class="header">Chat</h3>
+      <!--Populate this column with current rooms messages-->
+    </div>
+
+    <div class="column right">
+      <h3 class="header">Active Users</h3>
+      <div id="voice-chat">
+        <div id="active-users">
+          <ul *ngFor = "let user of activeusers">
+            <span>{{user.username}}</span>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
-  
+</body>

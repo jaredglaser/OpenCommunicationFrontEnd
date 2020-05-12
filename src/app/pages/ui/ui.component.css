@@ -1,0 +1,29 @@
+.header{
+    text-align: center;
+}
+
+.column {
+    float: left;
+    padding: 10px;
+}
+
+.column.left {
+    width: 25%;
+}
+
+.column.middle {
+    width: 60%;
+}
+
+.column.right {
+    width: 15%;
+}
+
+.servers {
+    max-height: 100px;
+    overflow: scroll;
+}
+
+.rooms {
+    overflow: scroll
+}
