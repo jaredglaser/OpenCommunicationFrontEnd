@@ -1,3 +1,4 @@
+
 {{username}}
 <div>
 <ul>
@@ -7,11 +8,23 @@
   </ul>
 
 </div>
+Voice Chat Test
 <div id="voice-chat">
-  <div id="active-users">
+  <span>Your peer info: {{peerid}}</span>
+  <br>
+  <input #peerstring id="callid">
+  <button (click)="joincall(peerstring.value)">Join a Call (GUEST)</button>
+  <button (click)="joincallHost(peerstring.value)">Join a Call (HOST)</button>
+  <br>
+  <button (click)="createcall()">Create Call</button>
+  <button (click)="shareVideo()">Share Video</button>
+  <!--<div id="active-users">
     <ul *ngFor = "let user of activeusers">
       <span>{{user.username}}</span>
     </ul>
-  </div>
+  </div>-->
+  <video>
+
+  </video>
 </div>
   
