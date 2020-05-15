@@ -22,7 +22,12 @@ class user{
 const ROOMS: room[] = [
   { id: 101, name: "myroom", server: 11 },
   { id: 102, name: "aroom", server: 11},
-  { id: 103, name: "anotherroom", server: 12}
+  { id: 103, name: "anotherroom", server: 12},
+  { id: 104, name: "room4", server: 12},
+  { id: 105, name: "room5", server: 13},
+  { id: 106, name: "room6", server: 13},
+  { id: 107, name: "room7", server: 14},  
+  { id: 108, name: "room8", server: 15},
 ];
 
 const SERVERS: server[] = [
@@ -32,6 +37,16 @@ const SERVERS: server[] = [
   { id: 14, name: 'thisserver' },
   { id: 15, name: 'anotherserver' }
 ];
+
+const FRIENDS: user[] = [
+  { id: 1001, username: 'bestFriend'},
+  { id: 1002, username: 'myFriend'},
+  { id: 1003, username: 'aFriend'},
+];
+
+
+
+
 @Component({
   selector: 'app-ui',
   templateUrl: './ui.component.html',
@@ -40,16 +55,19 @@ const SERVERS: server[] = [
 export class UIComponent implements OnInit {
   servers = SERVERS;
   rooms = ROOMS;
+  friends = FRIENDS;
   activeusers = [{id:1,name: "testuser"}];
   username = localStorage.getItem('username');
+  
+
   constructor() { }
 
 
   ngOnInit(): void {
-    
+
   }
 
-  
+
 
 }
 

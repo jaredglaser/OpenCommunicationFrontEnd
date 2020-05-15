@@ -8,16 +8,20 @@
   <div class="row">
     <div class="column left">
       <h3 class="header">Servers</h3>
-      <ul class="servers">
+      <ul class="list-group" id="servers">
         <li *ngFor="let server of servers">
-          <span class="rooms-servers">{{server.id}}</span> {{server.name}}
+          <a href="/ui" class="list-group-item">
+            <span class="rooms-servers">{{server.id}}</span> {{server.name}}
+          </a>
         </li>
       </ul>
 
       <h3 class="header">Rooms</h3>
-      <ul class="rooms">
+      <ul class="list-group" id="rooms">
         <li *ngFor="let room of rooms">
-          <span class="rooms-servers">{{room.id}}</span> {{room.name}}
+          <a href="/ui" class="list-group-item">
+            <span class="rooms-servers">{{room.id}}</span> {{room.name}}
+          </a>
         </li>
       </ul>
     </div>
@@ -31,8 +35,12 @@
       <h3 class="header">Friends List</h3>
       <div id="voice-chat">
         <div id="active-users">
-          <ul *ngFor = "let user of activeusers">
-            <span>{{user.username}}</span>
+          <ul class="list-group" id="friends">
+            <li *ngFor = "let friend of friends">
+              <a href="ui" class="list-group-item">
+                <span>{{friend.username}}</span>
+              </a>
+            </li>
           </ul>
         </div>
       </div>

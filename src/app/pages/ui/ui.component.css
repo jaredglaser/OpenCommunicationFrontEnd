@@ -19,16 +19,25 @@
     width: 15%;
 }
 
-.servers {
-    max-height: 100px;
+.list-group {
+    margin-bottom: 10px;
     overflow: scroll;
+    -webkit-overflow-scrolling: touch;
 }
 
-.rooms {
-    overflow: scroll
+
+#servers {
+    max-height: 150px;
+}
+
+#rooms {
+    max-height: 300px;
 }
 
 .rooms-servers {
-    color: cornflowerblue;
+    color: #000000;
     font-weight: bold;
 }
+
+
+
