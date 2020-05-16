@@ -51,6 +51,12 @@
     font-weight: bold;
 }
 
+/* toggle active list-group-item */
+.active {
+    color: blue;
+    background-color: #cf5c3f;
+}
+
 /* Chat containers */
 .container {
     border: 2px solid #dedede;
@@ -112,6 +118,14 @@
   .username-left {
       float: left;
       color: #999;
+  }
+
+  .refresh-right {
+      float: right;
+  }
+
+  #search-friend {
+    width: 135px;
   }
 
 

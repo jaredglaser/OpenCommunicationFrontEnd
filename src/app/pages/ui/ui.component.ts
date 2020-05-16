@@ -64,14 +64,25 @@ export class UIComponent implements OnInit {
 
 
   ngOnInit(): void {
-    document.getElementById("refresh").addEventListener("click", this.refreshFriendsList, false);
+    document.getElementById("refresh-chat").addEventListener("click", this.refreshChat, false);
+    document.getElementById("refresh-friends").addEventListener("click", this.refreshFriendsList, false);
+    document.getElementById("add-friend-btn").addEventListener("click", this.addFriend, false);
+  }
+
+  //TODO GET request to update messages list
+  refreshChat(): void{
+    console.log("refresh friends list");
   }
 
   //TODO GET request to get current friends list
   refreshFriendsList(): void{
-    console.log("refresh");
+    console.log("refresh friends list");
   }
 
+  //TODO POST request to add a friend, If Successful -> GET request to update friends list
+  addFriend(): void{
+    console.log("add friend");
+  }
 
 
 }
