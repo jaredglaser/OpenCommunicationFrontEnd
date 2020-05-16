@@ -64,7 +64,12 @@ export class UIComponent implements OnInit {
 
 
   ngOnInit(): void {
+    document.getElementById("refresh").addEventListener("click", this.refreshFriendsList, false);
+  }
 
+  //TODO GET request to get current friends list
+  refreshFriendsList(): void{
+    console.log("refresh");
   }
 
 
