@@ -19,6 +19,16 @@ class user{
   username: string;
 }
 
+class message{
+  time: string;
+  from: string;
+  classcontainer: string;
+  classimage: string;
+  timeclass: string;
+  usernameclass:string;
+  content: string;
+}
+
 const ROOMS: room[] = [
   { id: 101, name: "myroom", server: 11 },
   { id: 102, name: "aroom", server: 11},
@@ -29,6 +39,18 @@ const ROOMS: room[] = [
   { id: 107, name: "room7", server: 14},  
   { id: 108, name: "room8", server: 15},
 ];
+
+const MESSAGES: message[] = [
+  { time: "11:00", from: "otheruser", classcontainer:"container", classimage: "", timeclass:"time-right" , usernameclass:"username-left", content:"whats up"},
+  { time: "11:00", from: "jaredtest", classcontainer:"container darker",classimage: "right",timeclass:"time-left" , usernameclass:"username-right",content:"whats up"},
+  { time: "11:00", from: "otheruser", classcontainer:"container",classimage: "",timeclass:"time-right" , usernameclass:"username-left",content:"whats up"},
+  { time: "11:00", from: "otheruser", classcontainer:"container",classimage: "",timeclass:"time-right" , usernameclass:"username-left",content:"whats up"},
+  { time: "11:00", from: "jaredtest", classcontainer:"container darker",classimage: "right",timeclass:"time-left" , usernameclass:"username-right",content:"whats up"},
+  { time: "11:00", from: "jaredtest", classcontainer:"container darker",classimage: "right",timeclass:"time-left" , usernameclass:"username-right",content:"whats up"},
+  { time: "11:00", from: "otheruser", classcontainer:"container",classimage: "",timeclass:"time-right" , usernameclass:"username-left",content:"whats up"},
+  { time: "11:00", from: "jaredtest", classcontainer:"container darker",classimage: "right",timeclass:"time-left" , usernameclass:"username-right",content:"whats up"},
+];
+
 
 const SERVERS: server[] = [
   { id: 11, name: 'myserver' },
@@ -54,6 +76,7 @@ const FRIENDS: user[] = [
 })
 export class UIComponent implements OnInit {
   servers = SERVERS;
+  messages = MESSAGES;
   rooms = ROOMS;
   friends = FRIENDS;
   activeusers = [{id:1,name: "testuser"}];
@@ -66,7 +89,7 @@ export class UIComponent implements OnInit {
   ngOnInit(): void {
     document.getElementById("refresh-chat").addEventListener("click", this.refreshChat, false);
     document.getElementById("refresh-friends").addEventListener("click", this.refreshFriendsList, false);
-    document.getElementById("add-friend-btn").addEventListener("click", this.addFriend, false);
+    document.getElementById("add-friend").addEventListener("click", this.addFriend, false);
   }
 
   //TODO GET request to update messages list
@@ -81,7 +104,10 @@ export class UIComponent implements OnInit {
 
   //TODO POST request to add a friend, If Successful -> GET request to update friends list
   addFriend(): void{
-    console.log("add friend");
+
+    var friend = (<HTMLInputElement>document.getElementById("search-friend")).value;
+    console.log("add friend: " + friend);
+
   }
 
 
