@@ -35,6 +35,10 @@
     -webkit-overflow-scrolling: touch;
 }
 
+.selected-list-item {
+  background-color: #ddd;
+}
+
 /* list-group of servers */
 #servers {
     max-height: 150px;
