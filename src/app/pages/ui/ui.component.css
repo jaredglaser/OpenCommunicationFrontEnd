@@ -74,7 +74,7 @@
     display: table;
   }
   
-  /* Style images 
+  /* Style images */
   .container img {
     float: left;
     max-width: 60px;
@@ -83,13 +83,13 @@
     border-radius: 50%;
   }
   
-   Style the right image 
+  /* Style the right image */
   .container img.right {
     float: right;
     margin-left: 20px;
     margin-right:0;
   }
-  */
+  
   
   /* Style time text */
   .time-right {
