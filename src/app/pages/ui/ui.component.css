@@ -17,11 +17,15 @@
 /* Chat Column */
 .column.middle {
     width: 60%;
+    max-height: 550px;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
 }
 
 /* Friends List Column */
 .column.right {
     width: 15%;
+    max-height: 300px;
 }
 
 /* List-group containing list-group-items */
@@ -38,11 +42,6 @@
 
 /* list-group of rooms */
 #rooms {
-    max-height: 300px;
-}
-
-/* list-group of friends */
-#friends-list {
     max-height: 300px;
 }
 
