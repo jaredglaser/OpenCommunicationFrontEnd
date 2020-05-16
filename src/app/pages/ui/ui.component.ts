@@ -19,6 +19,16 @@ class user{
   username: string;
 }
 
+class message{
+  time: string;
+  from: string;
+  classcontainer: string;
+  classimage: string;
+  timeclass: string;
+  usernameclass:string;
+  content: string;
+}
+
 const ROOMS: room[] = [
   { id: 101, name: "myroom", server: 11 },
   { id: 102, name: "aroom", server: 11},
@@ -29,6 +39,18 @@ const ROOMS: room[] = [
   { id: 107, name: "room7", server: 14},  
   { id: 108, name: "room8", server: 15},
 ];
+
+const MESSAGES: message[] = [
+  { time: "11:00", from: "otheruser", classcontainer:"container", classimage: "", timeclass:"time-right" , usernameclass:"username-left", content:"whats up"},
+  { time: "11:00", from: "jaredtest", classcontainer:"container darker",classimage: "right",timeclass:"time-left" , usernameclass:"username-right",content:"whats up"},
+  { time: "11:00", from: "otheruser", classcontainer:"container",classimage: "",timeclass:"time-right" , usernameclass:"username-left",content:"whats up"},
+  { time: "11:00", from: "otheruser", classcontainer:"container",classimage: "",timeclass:"time-right" , usernameclass:"username-left",content:"whats up"},
+  { time: "11:00", from: "jaredtest", classcontainer:"container darker",classimage: "right",timeclass:"time-left" , usernameclass:"username-right",content:"whats up"},
+  { time: "11:00", from: "jaredtest", classcontainer:"container darker",classimage: "right",timeclass:"time-left" , usernameclass:"username-right",content:"whats up"},
+  { time: "11:00", from: "otheruser", classcontainer:"container",classimage: "",timeclass:"time-right" , usernameclass:"username-left",content:"whats up"},
+  { time: "11:00", from: "jaredtest", classcontainer:"container darker",classimage: "right",timeclass:"time-left" , usernameclass:"username-right",content:"whats up"},
+];
+
 
 const SERVERS: server[] = [
   { id: 11, name: 'myserver' },
@@ -54,6 +76,7 @@ const FRIENDS: user[] = [
 })
 export class UIComponent implements OnInit {
   servers = SERVERS;
+  messages = MESSAGES;
   rooms = ROOMS;
   friends = FRIENDS;
   activeusers = [{id:1,name: "testuser"}];
