@@ -1,50 +1,118 @@
+/* Headers above Columns */
 .header{
     text-align: center;
 }
 
+/* All Columns */
 .column {
     float: left;
     padding: 10px;
 }
 
+/* Rooms and servers Column */
 .column.left {
     width: 25%;
 }
 
+/* Chat Column */
 .column.middle {
     width: 60%;
 }
 
+/* Friends List Column */
 .column.right {
     width: 15%;
 }
 
+/* List-group containing list-group-items */
 .list-group {
     margin-bottom: 10px;
     overflow: scroll;
     -webkit-overflow-scrolling: touch;
 }
 
-
-
+/* list-group of servers */
 #servers {
     max-height: 150px;
 }
 
+/* list-group of rooms */
 #rooms {
     max-height: 300px;
 }
 
+/* list-group of friends */
 #friends-list {
     max-height: 300px;
 }
 
-
-
+/* room and server id numbers */
 .rooms-servers-ids {
     color: #000000;
     font-weight: bold;
 }
 
+/* Chat containers */
+.container {
+    border: 2px solid #dedede;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+  }
+  
+  /* Darker chat container */
+  .darker {
+    border-color: #ccc;
+    background-color: #ddd;
+  }
+  
+  /* Clear floats */
+  .container::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+  
+  /* Style images 
+  .container img {
+    float: left;
+    max-width: 60px;
+    width: 100%;
+    margin-right: 20px;
+    border-radius: 50%;
+  }
+  
+   Style the right image 
+  .container img.right {
+    float: right;
+    margin-left: 20px;
+    margin-right:0;
+  }
+  */
+  
+  /* Style time text */
+  .time-right {
+    float: right;
+    color: #aaa;
+  }
+  
+  /* Style time text */
+  .time-left {
+    float: left;
+    color: #999;
+  }
+
+  /* Current User's username within message */
+  .username-right {
+    float: right;
+    color: #aaa;
+  }
+
+  /* Other User's username within message */
+  .username-left {
+      float: left;
+      color: #999;
+  }
 
 
