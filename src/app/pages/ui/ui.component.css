@@ -26,6 +26,7 @@
 }
 
 
+
 #servers {
     max-height: 150px;
 }
@@ -34,7 +35,11 @@
     max-height: 300px;
 }
 
-.rooms-servers {
+#friends-list {
+    max-height: 300px;
+}
+
+.rooms-servers-ids {
     color: #000000;
     font-weight: bold;
 }

@@ -8,21 +8,17 @@
   <div class="row">
     <div class="column left">
       <h3 class="header">Servers</h3>
-      <ul class="list-group" id="servers">
-        <li *ngFor="let server of servers">
-          <a href="/ui" class="list-group-item">
-            <span class="rooms-servers">{{server.id}}</span> {{server.name}}
-          </a>
-        </li>
+      <ul class="list-group list-group-flush" id="servers">
+        <button *ngFor="let server of servers" type=button class="list-group-item list-group-item-action">
+          <span class="rooms-servers-ids">{{server.id}}</span> : {{server.name}}
+        </button>
       </ul>
 
       <h3 class="header">Rooms</h3>
-      <ul class="list-group" id="rooms">
-        <li *ngFor="let room of rooms">
-          <a href="/ui" class="list-group-item">
-            <span class="rooms-servers">{{room.id}}</span> {{room.name}}
-          </a>
-        </li>
+      <ul class="list-group list-group-flush" id="rooms">
+        <button *ngFor="let room of rooms" type="button" class="list-group-item list-group-item-action">
+          <span class="rooms-servers-ids">{{room.id}}</span> : {{room.name}}
+        </button>
       </ul>
     </div>
     
@@ -35,12 +31,10 @@
       <h3 class="header">Friends List</h3>
       <div id="voice-chat">
         <div id="active-users">
-          <ul class="list-group" id="friends">
-            <li *ngFor = "let friend of friends">
-              <a href="/ui" class="list-group-item">
-                <span>{{friend.username}}</span>
-              </a>
-            </li>
+          <ul class="list-group list-group-flush" id="friends-list">
+            <button *ngFor = "let friend of friends" type="button" class="list-group-item list-group-item-action">
+              <span>{{friend.username}}</span>
+            </button>
           </ul>
         </div>
       </div>
