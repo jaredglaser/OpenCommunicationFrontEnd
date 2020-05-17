@@ -8,10 +8,6 @@
   <div class="row">
     <div class="column left">
       <h3 class="header">Servers</h3>
-      <div>
-        <input id="name-room" class="input-text" type="text">
-        <button  type="button" class="btn" id="create-room">+</button>
-      </div>
       <ul class="list-group list-group-flush" id="servers">
         <button *ngFor="let server of servers" type="button" class="list-group-item list-group-item-action">
           <span class="rooms-servers-ids">{{server.id}}</span> : {{server.name}}
@@ -19,6 +15,10 @@
       </ul>
 
       <h3 class="header">Rooms</h3>
+      <div>
+        <input id="name-room" class="input-text" type="text">
+        <button  type="button" class="btn" id="create-room">+</button>
+      </div>
       <ul class="list-group list-group-flush" id="rooms">
         <button *ngFor="let room of rooms" type="button" class="list-group-item list-group-item-action">
           <span class="rooms-servers-ids">{{room.id}}</span> : {{room.name}}
