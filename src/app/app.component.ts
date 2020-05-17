@@ -6,7 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  loggedIn: boolean = false;
   
   ngOnInit(): void {
     document.getElementById("sign-out").addEventListener("click", this.signOut, false);
@@ -20,7 +19,6 @@ export class AppComponent {
   //TODO sign user out
   signOut(): void{
     console.log("sign-out");
-    this.loggedIn = false;
     document.getElementById("nav-logged-in").style.visibility = "hidden";
     document.getElementById("nav-logged-out").style.visibility = "visible";
   }
