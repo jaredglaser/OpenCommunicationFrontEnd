@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Globals } from 'src/app/Globals';
+import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 
 
 class server {
@@ -19,14 +22,19 @@ class user {
   username: string;
 }
 
-class message {
-  time: string;
-  from: string;
-  classcontainer: string;
-  classimage: string;
-  timeclass: string;
-  usernameclass: string;
-  content: string;
+class frontend_message {
+  time: String;
+  from: String;
+  classcontainer: String;
+  classimage: String;
+  timeclass: String;
+  usernameclass: String;
+  content: String;
+}
+class backend_message {
+  username: String;
+  time: Date;
+  content: String;
 }
 
 const ROOMS: room[] = [
@@ -40,7 +48,7 @@ const ROOMS: room[] = [
   { id: 108, name: "room8", server: 15 }
 ];
 
-const MESSAGES: message[] = [
+const MESSAGES: frontend_message[] = [
   { time: "11:00", from: "otheruser", classcontainer: "container", classimage: "", timeclass: "time-right", usernameclass: "username-left", content: "whats up" },
   { time: "11:00", from: "jaredtest", classcontainer: "container darker", classimage: "right", timeclass: "time-left", usernameclass: "username-right", content: "whats up" },
   { time: "11:00", from: "otheruser", classcontainer: "container", classimage: "", timeclass: "time-right", usernameclass: "username-left", content: "whats up" },
@@ -92,7 +100,7 @@ export class UIComponent implements OnInit {
   username = localStorage.getItem('username');
 
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
 
   ngOnInit(): void {
@@ -104,29 +112,85 @@ export class UIComponent implements OnInit {
   }
 
   //TODO GET request to api/messages/chatRefresh -> update messages list
-  refreshChat(): void{
-    console.log("refresh friends list");
+  refreshChat(): void {
+    //figure out if the chat is with a friend or with a room
+    Array.from(document.getElementsByClassName("selected-list-item")).forEach(element => {
+      var backendresults : Array<backend_message> = []; 
+      if (element.parentNode.previousSibling.textContent === "Friends") {
+        this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/room/refreshchat", { "name": element.textContent }).subscribe(response => {
+          backendresults = response;
+        });
+      }
+      else if (element.parentNode.previousSibling.textContent === "Rooms") {
+        var today = new Date();
+        this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/messages/refreshchat", { "username": element.textContent }).subscribe(response => {
+          backendresults = response;
+        });
+      }
+
+      this.messages = [];
+      backendresults.forEach((msg:backend_message) => {
+        var uimessage = new frontend_message();
+
+        //HANDLE TIME FORMATTING
+        var seconds : number = (today.getTime() - msg.time.getTime())/1000;
+        if(seconds < 60){
+          uimessage.time = seconds.toString() + " seconds ago";
+        }
+        else if(seconds < 3600){
+          uimessage.time = (seconds/60).toString() + " minutes ago";
+        }
+        else if(seconds < 86400){
+          uimessage.time = (seconds/360).toString() + " hours ago";
+        }
+        else{
+          uimessage.time = msg.time.toLocaleDateString();
+        }
+        uimessage.from = msg.username;
+        uimessage.content = msg.content;
+        if(this.username === uimessage.from){
+          uimessage.timeclass = "time-left";
+          uimessage.classimage = "right";
+          uimessage.classcontainer = "container darker";
+          uimessage.usernameclass =  "username-right";
+        }
+        else{
+          uimessage.timeclass = "time-right";
+          uimessage.classimage = "";
+          uimessage.classcontainer = "container";
+          uimessage.usernameclass = "username-left";
+        }
+        this.messages.push()
+      });
+
+    });
+
   }
 
   //TODO GET request to api/messages/friendRefresh ->get current friends list
-  refreshFriendsList(): void{
-    console.log("refresh friends list");
+  refreshFriendsList(): void {
+    
   }
 
-   // TODO POST request to api/messages/addFriend
-   // add a friend, If Successful -> GET request to update friends list */
-   // Should return whether or not send request was successfully sent or not (i.e. doesn't exist, already friends, etc.)
-   addFriend(): boolean{
+  // TODO POST request to api/messages/addFriend
+  // add a friend, If Successful -> GET request to update friends list */
+  // Should return whether or not send request was successfully sent or not (i.e. doesn't exist, already friends, etc.)
+  addFriend(): void {
     var friendUsername = (<HTMLInputElement>document.getElementById("search-friend")).value;
     console.log("add friend: " + friendUsername);
-    return true
   }
 
   //TODO POST request to api/room/create -> create room 
-  createRoom(): boolean{
+  createRoom(): void {
     var roomName = (<HTMLInputElement>document.getElementById("search-friend")).value;
     console.log("create room: " + roomName);
-    return true;
+    Array.from(document.getElementsByClassName("selected-list-item")).forEach(element => {
+      if (element.parentNode.previousSibling.textContent === "Servers") {
+        this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/room/create", { "server": element.textContent, "name": roomName, "type": "chat", "users" : [{"username": this.username}] }).subscribe(response => {
+          console.log(response);
+        });
+      }
+    });
   }
 
 
@@ -152,7 +216,7 @@ export class UIComponent implements OnInit {
             }
             element.classList.add("selected-list-item");
           });
-      }
+        }
         else if (element.parentNode.previousSibling.textContent === "Rooms") {
           Array.from(document.getElementsByClassName("list-group-item-action")).forEach(btn => {
             if (btn.parentNode.previousSibling.textContent !== "Servers") {
@@ -164,10 +228,5 @@ export class UIComponent implements OnInit {
       });
     });
   }
-
-
- 
-
-
 }
 
