@@ -1,0 +1,15 @@
+nav {
+    position: relative;
+}
+
+.navbar-nav-right {
+    position:absolute;right:0px;
+  }
+
+#nav-logged-in {
+    visibility: hidden;
+}
+
+#nav-logged-out {
+    visibility: visible;
+}

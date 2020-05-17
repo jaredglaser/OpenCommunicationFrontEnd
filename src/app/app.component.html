@@ -12,12 +12,19 @@
       <a class="nav-link" routerLink='home' routerLinkActive='active'>Home</a>
     </li>
   </ul>
-  <ul class='navbar-nav navbar-nav-right' >
+  <!-- If Not Logged In -->
+  <ul class='navbar-nav navbar-nav-right' id='nav-logged-out' >
     <li class='nav-item'>
       <a class="nav-link" routerLink='login' routerLinkActive='active'>Login</a>
     </li>
     <li class='nav-item'>
       <a class="nav-link" routerLink='register' routerLinkActive='active'>Create Account</a>
+    </li>
+  </ul>
+  <!-- If Logged In -->
+  <ul class='navbar-nav navbar-nav-right' id='nav-logged-in'>
+    <li class='nav-item'>
+      <a class="nav-link" id='sign-out' routerLink='login' routerLinkActive='active'>Sign-Out</a>
     </li>
   </ul>
 

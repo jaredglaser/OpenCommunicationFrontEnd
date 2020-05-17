@@ -6,17 +6,23 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Test';
+  loggedIn: boolean = false;
   
+  ngOnInit(): void {
+    document.getElementById("sign-out").addEventListener("click", this.signOut, false);
+  }
 
   //TODO Determine whether or not user is logged in
-  get loggedIn(): boolean {
-    return null;
+  getLoggedIn(): void{
+    // use get /api/security/authorize
   }
 
   //TODO sign user out
   signOut(): void{
-
+    console.log("sign-out");
+    this.loggedIn = false;
+    document.getElementById("nav-logged-in").style.visibility = "hidden";
+    document.getElementById("nav-logged-out").style.visibility = "visible";
   }
 
 

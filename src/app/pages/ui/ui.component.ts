@@ -105,7 +105,9 @@ export class UIComponent implements OnInit {
 
   ngOnInit(): void {
     document.getElementById("refresh-chat").addEventListener("click", this.refreshChat, false);
-    document.getElementById("refresh-friends").addEventListener("click", this.refreshFriendsList, false);
+    document.getElementById("refresh-friends").addEventListener("click", this.refreshServers, false);
+    document.getElementById("refresh-servers").addEventListener("click", this.refreshRooms, false);
+    document.getElementById("refresh-rooms").addEventListener("click", this.refreshFriendsList, false);
     document.getElementById("add-friend").addEventListener("click", this.addFriend, false);
     document.getElementById("create-room").addEventListener("click", this.createRoom, false);
 
@@ -170,6 +172,15 @@ export class UIComponent implements OnInit {
   //TODO GET request to api/messages/friendRefresh ->get current friends list
   refreshFriendsList(): void {
     
+  }
+
+
+  refreshServers(): void {
+
+  }
+
+  refreshRooms(): void {
+
   }
 
   // TODO POST request to api/messages/addFriend
