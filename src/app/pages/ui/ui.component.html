@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <head>
   <link rel="stylesheet" type="text/css" href="ui.component.css">
   <script src="ui.component.ts"></script>
@@ -8,7 +9,7 @@
   <div class="row">
     <div class="column left">
       <h3 class="header">Servers
-        <input type="image" id="refresh-server" class="refresh-right" src="/assets/images/refresh.png"/>
+        <input type="image" id="refresh-server" class="refresh-right" src="/assets/images/refresh.png" />
       </h3>
       <ul class="list-group list-group-flush" id="servers">
         <button *ngFor="let server of servers" type="button" class="list-group-item list-group-item-action">
@@ -17,11 +18,11 @@
       </ul>
 
       <h3 class="header">Rooms
-        <input type="image" id="refresh-room" class="refresh-right" src="/assets/images/refresh.png"/>
+        <input type="image" id="refresh-room" class="refresh-right" src="/assets/images/refresh.png" />
       </h3>
       <div>
         <input id="name-room" class="input-text" type="text">
-        <button  type="button" class="btn" id="create-room">+</button>
+        <button type="button" class="btn" id="create-room">+</button>
       </div>
       <ul class="list-group list-group-flush" id="rooms">
         <button *ngFor="let room of rooms" type="button" class="list-group-item list-group-item-action">
@@ -31,35 +32,44 @@
     </div>
 
     <div class="column middle">
-        <!--Populate this column with current rooms messages-->
+      <!--Populate this column with current rooms messages-->
       <h3 class="header" id="header-chat">Chat
-          <input type="image" id="refresh-chat" class="refresh-right" src="/assets/images/refresh.png"/>
+        <input type="image" id="refresh-chat" class="refresh-right" src="/assets/images/refresh.png" />
       </h3>
 
-      <div *ngFor="let message of messages" class={{message.classcontainer}}>
-        <img src="/assets/images/avatar-penguin.png" alt="Avatar" class={{message.classimage}}>
+      <ng-container *ngFor="let message of messages">
+        <div *ngIf="message.from == username" class="container darker">
+        <img src="/assets/images/avatar-penguin.png" alt="Avatar" class="username-left">
         <p>{{message.content}}</p>
-        <span class={{message.usernameclass}}>{{message.from}}</span>
-        <span class={{message.timeclass}}>{{message.time}}</span>
+        <span class="username-right">{{message.from}}</span>
+        <span class="time-left">{{message.time}}</span>
+      </div>
+      <div *ngIf="message.from != username" class="container">
+        <img src="/assets/images/avatar-penguin.png" alt="Avatar" class="username-left">
+        <p>{{message.content}}</p>
+        <span class="username-left">{{message.from}}</span>
+        <span class="time-right">{{message.time}}</span>
+
       </div>
 
-    </div>
+    </ng-container>
+  </div>
     <div class="column right">
       <h3 class="header">Friends
-        <input type="image" id="refresh-friends" class="refresh-right" src="/assets/images/refresh.png"/>
+        <input type="image" id="refresh-friends" class="refresh-right" src="/assets/images/refresh.png" />
       </h3>
 
       <div>
         <input id="search-friend" class="input-text" type="text">
-        <button  type="button" class="btn" id="add-friend">+</button>
+        <button type="button" class="btn" id="add-friend">+</button>
       </div>
 
-          <ul class="list-group list-group-flush" id="friends-list">
-            <button *ngFor = "let friend of friends" id="friend-username" type="button" class="list-group-item list-group-item-action">
-              <span>{{friend.username}}</span>
-            </button>
-          </ul>
+      <ul class="list-group list-group-flush" id="friends-list">
+        <button *ngFor="let friend of friends" id="friend-username" type="button"
+          class="list-group-item list-group-item-action">
+          <span>{{friend.username}}</span>
+        </button>
+      </ul>
     </div>
   </div>
 </body>
-
