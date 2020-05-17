@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';  
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Globals } from 'src/app/Globals';
@@ -25,10 +26,6 @@ class user {
 class frontend_message {
   time: String;
   from: String;
-  classcontainer: String;
-  classimage: String;
-  timeclass: String;
-  usernameclass: String;
   content: String;
 }
 class backend_message {
@@ -49,14 +46,14 @@ const ROOMS: room[] = [
 ];
 
 const MESSAGES: frontend_message[] = [
-  { time: "11:00", from: "otheruser", classcontainer: "container", classimage: "", timeclass: "time-right", usernameclass: "username-left", content: "whats up" },
-  { time: "11:00", from: "jaredtest", classcontainer: "container darker", classimage: "right", timeclass: "time-left", usernameclass: "username-right", content: "whats up" },
-  { time: "11:00", from: "otheruser", classcontainer: "container", classimage: "", timeclass: "time-right", usernameclass: "username-left", content: "whats up" },
-  { time: "11:00", from: "otheruser", classcontainer: "container", classimage: "", timeclass: "time-right", usernameclass: "username-left", content: "whats up" },
-  { time: "11:00", from: "jaredtest", classcontainer: "container darker", classimage: "right", timeclass: "time-left", usernameclass: "username-right", content: "whats up" },
-  { time: "11:00", from: "jaredtest", classcontainer: "container darker", classimage: "right", timeclass: "time-left", usernameclass: "username-right", content: "whats up" },
-  { time: "11:00", from: "otheruser", classcontainer: "container", classimage: "", timeclass: "time-right", usernameclass: "username-left", content: "whats up" },
-  { time: "11:00", from: "jaredtest", classcontainer: "container darker", classimage: "right", timeclass: "time-left", usernameclass: "username-right", content: "whats up" }
+  { time: "11:00", from: "otheruser", content: "whats up" },
+  { time: "11:00", from: "jaredtest", content: "whats up" },
+  { time: "11:00", from: "otheruser", content: "whats up" },
+  { time: "11:00", from: "otheruser",  content: "whats up" },
+  { time: "11:00", from: "jaredtest",content: "whats up" },
+  { time: "11:00", from: "jaredtest", content: "whats up" },
+  { time: "11:00", from: "otheruser",  content: "whats up" },
+  { time: "11:00", from: "jaredtest",  content: "whats up" }
 ];
 
 
@@ -150,18 +147,6 @@ export class UIComponent implements OnInit {
         }
         uimessage.from = msg.username;
         uimessage.content = msg.content;
-        if(this.username === uimessage.from){
-          uimessage.timeclass = "time-left";
-          uimessage.classimage = "right";
-          uimessage.classcontainer = "container darker";
-          uimessage.usernameclass =  "username-right";
-        }
-        else{
-          uimessage.timeclass = "time-right";
-          uimessage.classimage = "";
-          uimessage.classcontainer = "container";
-          uimessage.usernameclass = "username-left";
-        }
         this.messages.push()
       });
 

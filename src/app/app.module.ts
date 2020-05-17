@@ -9,6 +9,8 @@ import { RegisterComponent } from './pages/register/register.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ChangepwdComponent } from './pages/changepwd/changepwd.component';
 import { UIComponent } from './pages/ui/ui.component';
+import { CommonModule } from '@angular/common';  
+
 
 @NgModule({
   declarations: [
@@ -21,6 +23,7 @@ import { UIComponent } from './pages/ui/ui.component';
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     FormsModule,
     AppRoutingModule,
     HttpClientModule
