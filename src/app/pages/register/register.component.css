@@ -1,0 +1,32 @@
+.container {
+
+    width: 50%;
+    margin: auto;
+    margin-top: 100px;
+    color: #ffffff;
+    background-color: #343a40;
+    border-radius: 8px;
+
+}
+
+.center {
+    margin: auto;
+    width: 300px;
+    text-align: center;
+    padding: 10px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.form-group {
+    display: inline;
+}
+
+label {
+    float: left;
+}
+
+#register {
+    margin-top: 20px;
+}

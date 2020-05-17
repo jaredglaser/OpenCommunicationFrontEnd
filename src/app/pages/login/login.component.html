@@ -1,14 +1,27 @@
-<h2>Login</h2>
-<!--Testing-->
-{{login_form.value | json }}
-<form #login_form="ngForm" (ngSubmit)="login(login_form.value)">
-    <div class="form-group">
-        <label for="username">Username:</label>
-        <input name="username" type="text" class="form-control" id="username" style="width:200px" ngModel>
+<!DOCTYPE html>
+<head>
+  <link rel="stylesheet" type="text/css" href="login.component.css">
+  <script src="login.component.ts"></script>
+</head>
+<body>
+
+    
+    <!--Testing-->
+    <!-- {{login_form.value | json }} -->
+    <div class="container">
+        
+        <form #login_form="ngForm" (ngSubmit)="login(login_form.value)">
+            <div class="form-group center">
+                <h2 class="center">Login</h2>
+                <label for="username" class="center">Username:</label>
+                <input name="username" type="text" class="form-control center" id="username" style="width:200px" ngModel>
+            </div>
+            <div class="form-group center">
+                <label for="pwd" class="center">Password:</label>
+                <input name="password" type="password" class="form-control center" id="pwd" style="width:200px" ngModel>
+                <button id="sign-in" type="submit" class="btn btn-info center">Sign in</button>
+            </div>
+        </form>
     </div>
-    <div class="form-group">
-        <label for="pwd">Password:</label>
-        <input name="password" type="password" class="form-control" id="pwd" style="width:200px" ngModel>
-    </div>
-    <button id="sign-in" type="submit" class="btn btn-info">Sign in</button>
-</form>
+
+</body>

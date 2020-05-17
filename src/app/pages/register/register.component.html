@@ -1,14 +1,28 @@
-<h2>Create Account</h2>
+<!DOCTYPE html>
+<head>
+  <link rel="stylesheet" type="text/css" href="register.component.css">
+  <script src="register.component.ts"></script>
+</head>
+<body>
+
+
 <!--Testing-->
-{{register_form.value | json }}
-<form #register_form="ngForm" (ngSubmit)="register(register_form.value)">
-    <div class="form-group">
-        <label for="username">Username:</label>
-        <input name="username" type="text" class="form-control" id="username" style="width:200px" ngModel>
+<!-- {{login_form.value | json }} -->
+    <div class="container">
+        
+        <form #register_form="ngForm" (ngSubmit)="register(register_form.value)">
+            <div class="form-group center">
+                <h2 class="center">Create Account</h2>
+                <label for="username" class="center">Username:</label>
+                <input name="username" type="text" class="form-control center" id="username" style="width:200px" ngModel>
+            </div>
+            <div class="form-group center">
+                <label for="pwd" class="center">Password:</label>
+                <input name="password" type="password" class="form-control center" id="pwd" style="width:200px" ngModel>
+                <button id="register" type="submit" class="btn btn-info center">Create Account</button>
+            </div>
+        </form>
     </div>
-    <div class="form-group">
-        <label for="pwd">Password:</label>
-        <input name="password" type="password" class="form-control" id="pwd" style="width:200px" ngModel>
-    </div>
-    <button id="register" type="submit" class="btn btn-info">Create Account</button>
-</form>
+</body>
+
+
