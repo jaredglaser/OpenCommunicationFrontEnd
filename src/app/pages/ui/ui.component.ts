@@ -37,7 +37,7 @@ const ROOMS: room[] = [
   { id: 105, name: "room5", server: 13 },
   { id: 106, name: "room6", server: 13 },
   { id: 107, name: "room7", server: 14 },
-  { id: 108, name: "room8", server: 15 },
+  { id: 108, name: "room8", server: 15 }
 ];
 
 const MESSAGES: message[] = [
@@ -48,7 +48,7 @@ const MESSAGES: message[] = [
   { time: "11:00", from: "jaredtest", classcontainer: "container darker", classimage: "right", timeclass: "time-left", usernameclass: "username-right", content: "whats up" },
   { time: "11:00", from: "jaredtest", classcontainer: "container darker", classimage: "right", timeclass: "time-left", usernameclass: "username-right", content: "whats up" },
   { time: "11:00", from: "otheruser", classcontainer: "container", classimage: "", timeclass: "time-right", usernameclass: "username-left", content: "whats up" },
-  { time: "11:00", from: "jaredtest", classcontainer: "container darker", classimage: "right", timeclass: "time-left", usernameclass: "username-right", content: "whats up" },
+  { time: "11:00", from: "jaredtest", classcontainer: "container darker", classimage: "right", timeclass: "time-left", usernameclass: "username-right", content: "whats up" }
 ];
 
 
@@ -64,6 +64,15 @@ const FRIENDS: user[] = [
   { id: 1001, username: 'bestFriend' },
   { id: 1002, username: 'myFriend' },
   { id: 1003, username: 'aFriend' },
+  { id: 1004, username: 'pal' },
+  { id: 1005, username: 'someGuy' },
+  { id: 1006, username: 'Dave' },
+  { id: 1007, username: 'randomGuy' },
+  { id: 1008, username: 'anotherOne' },
+  { id: 1009, username: 'dude' },
+  { id: 1010, username: 'someGirl' },
+  { id: 1011, username: 'bro' },
+  { id: 1012, username: 'guy' }
 ];
 
 
@@ -90,23 +99,34 @@ export class UIComponent implements OnInit {
     document.getElementById("refresh-chat").addEventListener("click", this.refreshChat, false);
     document.getElementById("refresh-friends").addEventListener("click", this.refreshFriendsList, false);
     document.getElementById("add-friend").addEventListener("click", this.addFriend, false);
+    document.getElementById("create-room").addEventListener("click", this.createRoom, false);
+
   }
 
-  //TODO GET request to update messages list
+  //TODO GET request to api/messages/chatRefresh -> update messages list
   refreshChat(): void{
     console.log("refresh friends list");
   }
 
-  //TODO GET request to get current friends list
+  //TODO GET request to api/messages/friendRefresh ->get current friends list
   refreshFriendsList(): void{
     console.log("refresh friends list");
   }
 
-   //TODO POST request to add a friend, If Successful -> GET request to update friends list
-   addFriend(): void{
-    var friend = (<HTMLInputElement>document.getElementById("search-friend")).value;
-    console.log("add friend: " + friend);
+   // TODO POST request to api/messages/addFriend
+   // add a friend, If Successful -> GET request to update friends list */
+   // Should return whether or not send request was successfully sent or not (i.e. doesn't exist, already friends, etc.)
+   addFriend(): boolean{
+    var friendUsername = (<HTMLInputElement>document.getElementById("search-friend")).value;
+    console.log("add friend: " + friendUsername);
+    return true
+  }
 
+  //TODO POST request to api/room/create -> create room 
+  createRoom(): boolean{
+    var roomName = (<HTMLInputElement>document.getElementById("search-friend")).value;
+    console.log("create room: " + roomName);
+    return true;
   }
 
 

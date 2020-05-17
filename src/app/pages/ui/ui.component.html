@@ -8,6 +8,10 @@
   <div class="row">
     <div class="column left">
       <h3 class="header">Servers</h3>
+      <div>
+        <input id="name-room" class="input-text" type="text">
+        <button  type="button" class="btn" id="create-room">+</button>
+      </div>
       <ul class="list-group list-group-flush" id="servers">
         <button *ngFor="let server of servers" type="button" class="list-group-item list-group-item-action">
           <span class="rooms-servers-ids">{{server.id}}</span> : {{server.name}}
@@ -24,7 +28,7 @@
 
     <div class="column middle">
         <!--Populate this column with current rooms messages-->
-      <h3 class="header">Chat
+      <h3 class="header" id="header-chat">Chat
           <input type="image" id="refresh-chat" class="refresh-right" src="/assets/images/refresh.png"/>
       </h3>
 
@@ -42,7 +46,7 @@
       </h3>
 
       <div>
-        <input id="search-friend" type="text">
+        <input id="search-friend" class="input-text" type="text">
         <button  type="button" class="btn" id="add-friend">+</button>
       </div>
 

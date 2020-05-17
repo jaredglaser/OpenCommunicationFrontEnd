@@ -1,31 +1,48 @@
-/* Headers above Columns */
-.header{
-    text-align: center;
+
+
+.row {
+  background-color: #343a40;
+  overflow: hidden;
+
 }
 
 /* All Columns */
 .column {
-    float: left;
-    padding: 10px;
+  float: left;
+  padding: 10px;
+  max-height: 90.75vh; /* accounts for nav-bar, no scroll in window */
 }
 
 /* Rooms and servers Column */
 .column.left {
-    width: 25%;
+  width: 25%;
+  border-top-right-radius: 8px;
+  background-color: #ffffff;
 }
 
 /* Chat Column */
 .column.middle {
     width: 60%;
-    max-height: 550px;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
+    background-color: #343a40
 }
 
 /* Friends List Column */
 .column.right {
     width: 15%;
-    max-height: 300px;
+    border-top-left-radius: 8px;
+    background-color: #ffffff;
+
+}
+
+/* Headers above list-groups */
+.header{
+  text-align: center;
+}
+
+#header-chat {
+  color: #ffffff;
 }
 
 /* List-group containing list-group-items */
@@ -33,6 +50,7 @@
     margin-bottom: 10px;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
+    max-height: 70%;
 }
 
 .selected-list-item {
@@ -41,12 +59,17 @@
 
 /* list-group of servers */
 #servers {
-    max-height: 150px;
+    max-height: 25%;
 }
 
 /* list-group of rooms */
 #rooms {
-    max-height: 300px;
+    max-height: 50%;
+}
+
+/* list of friends */
+#friends-list {
+  max-height: 85%;
 }
 
 /* room and server id numbers */
@@ -59,6 +82,11 @@
 .active {
     color: blue;
     background-color: #cf5c3f;
+}
+
+#refresh-chat {
+  background-color: #ffffff;
+  border-radius: 8px;
 }
 
 /* Chat containers */
@@ -133,8 +161,15 @@
       float: right;
   }
 
-  #search-friend {
-    width: 135px;
+  .input-text {
+    border-radius: 5px;
   }
 
+  #search-friend {
+    width: 75%;
+  }
+
+  #name-room {
+    width: 85%;
+  }
 
