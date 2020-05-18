@@ -109,13 +109,13 @@ export class UIComponent implements OnInit {
     Array.from(document.getElementsByClassName("selected-list-item")).forEach(element => {
       var backendresults: Array<backend_message> = [];
       if (element.parentNode.previousSibling.textContent === "Friends") {
-        this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/room/chatrefresh", { "name": element.textContent }).subscribe(response => {
+        this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/room/chatrefresh", { "name": element.textContent },{ headers: {"authorization":localStorage.getItem("usertoken")} }).subscribe(response => {
           backendresults = response;
         });
       }
       else if (element.parentNode.previousSibling.textContent === "Rooms") {
         var today = new Date();
-        this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/messages/chatrefresh", { "username": element.textContent }).subscribe(response => {
+        this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/messages/chatrefresh", { "username": element.textContent },{ headers: {"authorization":localStorage.getItem("usertoken")} }).subscribe(response => {
           backendresults = response;
         });
       }
@@ -161,7 +161,7 @@ export class UIComponent implements OnInit {
 
   refreshServers(): void {
     console.log("refreshed servers");
-        this.http.get<any>(Globals.ip + ":" + Globals.port + "/api/server/list?user="+localStorage.getItem('username')).subscribe(response => {
+        this.http.get<any>(Globals.ip + ":" + Globals.port + "/api/server/list?user="+localStorage.getItem('username'),{ headers: {"authorization":localStorage.getItem("usertoken")} }).subscribe(response => {
           this.servers = [];
           for(var i = 0 ; i < response.length; i++ ){
             this.servers.push({id: response[i]._id, name: response[i].Name})
@@ -171,7 +171,7 @@ export class UIComponent implements OnInit {
 
   refreshRooms(): void {
     console.log("refreshed rooms");
-        this.http.get<any>(Globals.ip + ":" + Globals.port + "/api/server/refreshrooms?user="+localStorage.getItem('username')).subscribe(response => {
+        this.http.get<any>(Globals.ip + ":" + Globals.port + "/api/server/refreshrooms?user="+localStorage.getItem('username'),{ headers: {"authorization":localStorage.getItem("usertoken")} }).subscribe(response => {
           this.rooms = [];
           for(var i = 0 ; i < response.length; i++ ){
             this.rooms.push({id: response[i]._id, name: response[i].Name})
@@ -186,7 +186,7 @@ export class UIComponent implements OnInit {
   addFriend(): void {
     var friendUsername = (<HTMLInputElement>document.getElementById("search-friend")).value;
     console.log("add friend: " + friendUsername);
-    this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/messages/addFriend", { "to": friendUsername, "from": this.username}).subscribe(response => {
+    this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/messages/addFriend", { "to": friendUsername, "from": this.username},{ headers: {"authorization":localStorage.getItem("usertoken")} }).subscribe(response => {
       this.friends.push(friendUsername);
     });
   }
@@ -194,7 +194,7 @@ export class UIComponent implements OnInit {
   acceptFriend(): void {
     var friendUsername = (<HTMLInputElement>document.getElementById("search-friend")).value;
     console.log("add friend: " + friendUsername);
-    this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/messages/acceptFriend", { "to": friendUsername, "from": this.username}).subscribe(response => {
+    this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/messages/acceptFriend", { "to": friendUsername, "from": this.username},{ headers: {"authorization":localStorage.getItem("usertoken")} }).subscribe(response => {
       this.friends.push(friendUsername);
     });
   }
@@ -205,7 +205,7 @@ export class UIComponent implements OnInit {
     console.log("create room: " + roomName);
     Array.from(document.getElementsByClassName("selected-list-item")).forEach(element => {
       if (element.parentNode.previousSibling.textContent === "Servers") {
-        this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/room/create", { "server": element.textContent, "name": roomName, "type": "chat", "users": [{ "username": localStorage.getItem('username') }] }).subscribe(response => {
+        this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/room/create", { "server": element.textContent, "name": roomName, "type": "chat", "users": [{ "username": localStorage.getItem('username') }] },{ headers: {"authorization":localStorage.getItem("usertoken")} }).subscribe(response => {
           console.log(response);
         });
       }
@@ -215,7 +215,7 @@ export class UIComponent implements OnInit {
   createServer(): void {console.log("create server: ");
     var serverName = (<HTMLInputElement>document.getElementById("name-server")).value;
     console.log("create server: " + serverName);
-    this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/server/create", { "Name": serverName, "username": localStorage.getItem('username') }).subscribe(response => {
+    this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/server/create", { "Name": serverName, "username": localStorage.getItem('username') },{ headers: {"authorization":localStorage.getItem("usertoken")} }).subscribe(response => {
       console.log(response);
     });
   }
