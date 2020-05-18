@@ -16,8 +16,8 @@
         <button (click)="createServer()" type="button" class="btn" id="create-server">+</button>
       </div>
       <ul class="list-group list-group-flush" id="servers">
-        <button *ngFor="let server of servers" type="button" class="list-group-item list-group-item-action">
-          <span class="rooms-servers-ids">{{server.id}}</span> : {{server.name}}
+        <button *ngFor="let server of servers" type="button" (click)="handleListeners($event)" class="list-group-item list-group-item-action">
+          <span class="rooms-servers-ids">{{server.name}}</span>
         </button>
       </ul>
 
@@ -29,8 +29,8 @@
         <button type="button" class="btn" id="create-room">+</button>
       </div>
       <ul class="list-group list-group-flush" id="rooms">
-        <button *ngFor="let room of rooms" type="button" class="list-group-item list-group-item-action">
-          <span class="rooms-servers-ids">{{room.id}}</span> : {{room.name}}
+        <button *ngFor="let room of rooms" type="button" (click)="handleListeners($event)" class="list-group-item list-group-item-action">
+          <span class="rooms-servers-ids">{{room.name}}</span>
         </button>
       </ul>
     </div>
@@ -42,7 +42,7 @@
       </h3>
 
       <ng-container *ngFor="let message of messages">
-        <div *ngIf="message.from == username" class="container darker">
+        <div *ngIf="message.from == username"  class="container darker">
         <img src="/assets/images/avatar-penguin.png" alt="Avatar" class="username-left">
         <p>{{message.content}}</p>
         <span class="username-right">{{message.from}}</span>
@@ -69,7 +69,7 @@
       </div>
 
       <ul class="list-group list-group-flush" id="friends-list">
-        <button *ngFor="let friend of friends" id="friend-username" type="button"
+        <button *ngFor="let friend of friends" id="friend-username" (click)="handleListeners($event)" type="button"
           class="list-group-item list-group-item-action">
           <span>{{friend.username}}</span>
         </button>

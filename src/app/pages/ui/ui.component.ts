@@ -160,7 +160,6 @@ export class UIComponent implements OnInit {
             this.servers.push({id: response[i]._id, name: response[i].Name})
           }
         });
-
   }
 
   refreshRooms(): void {
@@ -210,21 +209,18 @@ export class UIComponent implements OnInit {
 
 
   // Adds active class to current list-item selected
-  ngAfterViewInit() {
-    var def = this;
-    Array.from(document.getElementsByClassName("list-group-item-action")).forEach(element => {
-      element.addEventListener("click", function () {
-        console.log(element.parentNode);
-        console.log(element.parentNode.previousSibling.textContent);
-        if (element.parentNode.previousSibling.textContent === "Servers") {
-          Array.from(document.getElementsByClassName("list-group-item-action")).forEach(btn => {
+  handleListeners(event) {
+        var element = event.target.closest('button');
+        var elementid = element.attributes.id;
+        if (element.parentNode.previousSibling.previousSibling.textContent.trim() === "Servers") {
+          Array.from(document.getElementsByClassName("list-group-item list-group-item-action")).forEach(btn => {
             console.log("removed class");
             btn.classList.remove("selected-list-item");
           })
           element.classList.add("selected-list-item");
         }
-        else if (element.parentNode.previousSibling.textContent.trim() === "Friends") {
-          Array.from(document.getElementsByClassName("list-group-item-action")).forEach(btn => {
+        else if (element.parentNode.previousSibling.previousSibling.textContent.trim() === "Friends") {
+          Array.from(document.getElementsByClassName("list-group-item list-group-item-action")).forEach(btn => {
             console.log("removed class");
             if (btn.parentNode.previousSibling.textContent !== "Servers") {
               btn.classList.remove("selected-list-item");
@@ -232,16 +228,14 @@ export class UIComponent implements OnInit {
             element.classList.add("selected-list-item");
           });
         }
-        else if (element.parentNode.previousSibling.textContent === "Rooms") {
-          Array.from(document.getElementsByClassName("list-group-item-action")).forEach(btn => {
+        else if (element.parentNode.previousSibling.previousSibling.textContent.trim() === "Rooms") {
+          Array.from(document.getElementsByClassName("list-group-item list-group-item-action")).forEach(btn => {
             if (btn.parentNode.previousSibling.textContent !== "Servers") {
               btn.classList.remove("selected-list-item");
             }
           })
           element.classList.add("selected-list-item");
         }
-      });
-    });
   }
 }
 
