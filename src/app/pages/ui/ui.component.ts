@@ -127,7 +127,7 @@ export class UIComponent implements OnInit {
     this.http.get<any>(Globals.ip + ":" + Globals.port + "/api/messages/friendRefresh?username=" + localStorage.getItem('username')).subscribe(response => {
       this.friends = [];
       for (var i = 0; i < response.length; i++) {
-        this.friends.push({ id: response[i]._id, name: response[i].username })
+        this.friends.push({ id: response[i]._id, username: response[i].friendrequests[i].username })
       }
     });
   }
@@ -160,6 +160,21 @@ export class UIComponent implements OnInit {
       }
     });
 
+  }
+
+  addToServer(): void {
+    var servername;
+    Array.from(document.getElementsByClassName("selected-list-item")).forEach(btn => {
+      if (btn.parentNode.previousSibling.previousSibling.textContent.trim() === "Servers") {
+        servername = btn.textContent;
+      }
+    });
+    var serverid = this.servers.find(server => server.name === servername).id;
+    var friendUsername = (<HTMLInputElement>document.getElementById("search-friend")).value;
+    console.log("add friend: " + friendUsername);
+    this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/server/join", { "serverId": serverid, "username": this.username }, { headers: { "authorization": localStorage.getItem("usertoken") } }).subscribe(response => {
+      this.friends.push(friendUsername);
+    });
   }
 
   // TODO POST request to api/messages/addFriend
