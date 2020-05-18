@@ -116,13 +116,13 @@ export class UIComponent implements OnInit {
     Array.from(document.getElementsByClassName("selected-list-item")).forEach(element => {
       var backendresults : Array<backend_message> = []; 
       if (element.parentNode.previousSibling.textContent === "Friends") {
-        this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/room/refreshchat", { "name": element.textContent }).subscribe(response => {
+        this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/room/chatrefresh", { "name": element.textContent }).subscribe(response => {
           backendresults = response;
         });
       }
       else if (element.parentNode.previousSibling.textContent === "Rooms") {
         var today = new Date();
-        this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/messages/refreshchat", { "username": element.textContent }).subscribe(response => {
+        this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/messages/chatrefresh", { "username": element.textContent }).subscribe(response => {
           backendresults = response;
         });
       }
@@ -156,15 +156,38 @@ export class UIComponent implements OnInit {
 
   //TODO GET request to api/messages/friendRefresh ->get current friends list
   refreshFriendsList(): void {
-    
   }
 
 
   refreshServers(): void {
+    Array.from(document.getElementsByClassName("selected-list-item")).forEach(element => {
+      var backendresults : Array<server> = []; 
+      if (element.parentNode.previousSibling.textContent === "Server") {
+        this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/server/list", { "Name": element.textContent }).subscribe(response => {
+          backendresults = response;
+        });
+      }
+      this.servers = [];
+      backendresults.forEach((serv: server) => {
+        this.servers.push();
+      })
+    });
 
   }
 
   refreshRooms(): void {
+    Array.from(document.getElementsByClassName("selected-list-item")).forEach(element => {
+      var backendresults : Array<room> = []; 
+      if (element.parentNode.previousSibling.textContent === "Room") {
+        this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/server/list", { "Name": element.textContent }).subscribe(response => {
+          backendresults = response;
+        });
+      }
+      this.rooms = [];
+      backendresults.forEach((rm: room) => {
+        this.rooms.push();
+      })
+    });
 
   }
 
