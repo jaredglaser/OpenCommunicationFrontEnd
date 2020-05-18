@@ -74,7 +74,8 @@
       <ul class="list-group list-group-flush" id="friends-list">
         <button *ngFor="let friend of friends" id="friend-username" (click)="handleListeners($event)" type="button"
           class="list-group-item list-group-item-action">
-          <span>{{friend.username}}</span>
+          <span #username>{{friend.username}}</span>
+          <button (click)="acceptFriend(username)" *ngIf="friend.isRequest != null">Add</button>
         </button>
       </ul>
     </div>

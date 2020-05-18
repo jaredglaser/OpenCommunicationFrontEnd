@@ -124,11 +124,18 @@ export class UIComponent implements OnInit {
   //TODO GET request to api/messages/friendRefresh ->get current friends list
   refreshFriendsList(): void {
     console.log("refreshed friends list");
-    this.http.get<any>(Globals.ip + ":" + Globals.port + "/api/messages/friendRefresh?username=" + localStorage.getItem('username')).subscribe(response => {
+    this.http.get<any>(Globals.ip + ":" + Globals.port + "/api/messages/friendRefresh?username=" + localStorage.getItem('username'),{ headers: { "authorization": localStorage.getItem("usertoken") }}).subscribe(response => {
       this.friends = [];
-      for (var i = 0; i < response.length; i++) {
-        this.friends.push({ id: response[i]._id, username: response[i].friendrequests[i].username })
+      if(response[0].friends != null){
+      for (var i = 0; i < response.friends.length; i++) {
+        this.friends.push({ id: response[0]._id, username: response[0].friends[i].username })
       }
+    }
+    if(response[0].friendrequests != null){
+      for (var i = 0; i < response[0].friendrequests.length; i++) {
+        this.friends.push({ id: response[0]._id, username: response[0].friendrequests[i].username, isRequest: true})
+      }
+    }
     });
   }
 
@@ -188,8 +195,8 @@ export class UIComponent implements OnInit {
     });
   }
 
-  acceptFriend(): void {
-    var friendUsername = (<HTMLInputElement>document.getElementById("search-friend")).value;
+  acceptFriend(friendUsername): void {
+    friendUsername = friendUsername.innerText;
     console.log("add friend: " + friendUsername);
     this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/messages/acceptFriend", { "to": friendUsername, "from": this.username }, { headers: { "authorization": localStorage.getItem("usertoken") } }).subscribe(response => {
       this.friends.push(friendUsername);
