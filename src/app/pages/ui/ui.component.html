@@ -35,7 +35,7 @@
       </ul>
     </div>
 
-    <div class="column middle">
+    <div class="column middle" style="position: relative;">
       <!--Populate this column with current rooms messages-->
     <h3 class="header" id="header-chat">Chat
       <input type="image" id="refresh-chat" class="refresh-right" src="/assets/images/refresh.png" />
@@ -55,7 +55,7 @@
         <span class="time-right">{{message.time}}</span>
       </div>
     </ng-container>
-    <div id="send-msg-container">
+    <div id="send-msg-container" style="bottom: 0; width: -webkit-fill-available; position: absolute;">
       <input id="send-msg-input" class="input-text" type="text">
       <button (click)="sendRoomChat" type="button" class="btn" id="send-msg-btn">Send</button>
     </div>
