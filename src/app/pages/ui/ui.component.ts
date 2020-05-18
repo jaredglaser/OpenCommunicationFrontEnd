@@ -164,18 +164,13 @@ export class UIComponent implements OnInit {
   }
 
   refreshRooms(): void {
-    Array.from(document.getElementsByClassName("selected-list-item")).forEach(element => {
-      var backendresults: Array<room> = [];
-      if (element.parentNode.previousSibling.textContent === "Room") {
-        this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/server/list", { "Name": element.textContent }).subscribe(response => {
-          backendresults = response;
+    console.log("refreshed rooms");
+        this.http.get<any>(Globals.ip + ":" + Globals.port + "/api/server/refreshrooms?user="+localStorage.getItem('username')).subscribe(response => {
+          this.rooms = [];
+          for(var i = 0 ; i < response.length; i++ ){
+            this.rooms.push({id: response[i]._id, name: response[i].Name})
+          }
         });
-      }
-      this.rooms = [];
-      backendresults.forEach((rm: room) => {
-        this.rooms.push();
-      })
-    });
 
   }
 
@@ -185,6 +180,17 @@ export class UIComponent implements OnInit {
   addFriend(): void {
     var friendUsername = (<HTMLInputElement>document.getElementById("search-friend")).value;
     console.log("add friend: " + friendUsername);
+    this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/messages/addFriend", { "to": friendUsername, "from": this.username}).subscribe(response => {
+      this.friends.push(friendUsername);
+    });
+  }
+
+  acceptFriend(): void {
+    var friendUsername = (<HTMLInputElement>document.getElementById("search-friend")).value;
+    console.log("add friend: " + friendUsername);
+    this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/messages/acceptFriend", { "to": friendUsername, "from": this.username}).subscribe(response => {
+      this.friends.push(friendUsername);
+    });
   }
 
   //TODO POST request to api/room/create -> create room 
