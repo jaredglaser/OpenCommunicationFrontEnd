@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';  
+import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Globals } from 'src/app/Globals';
@@ -49,11 +49,11 @@ const MESSAGES: frontend_message[] = [
   { time: "11:00", from: "otheruser", content: "whats up" },
   { time: "11:00", from: "jaredtest", content: "whats up" },
   { time: "11:00", from: "otheruser", content: "whats up" },
-  { time: "11:00", from: "otheruser",  content: "whats up" },
-  { time: "11:00", from: "jaredtest",content: "whats up" },
+  { time: "11:00", from: "otheruser", content: "whats up" },
   { time: "11:00", from: "jaredtest", content: "whats up" },
-  { time: "11:00", from: "otheruser",  content: "whats up" },
-  { time: "11:00", from: "jaredtest",  content: "whats up" }
+  { time: "11:00", from: "jaredtest", content: "whats up" },
+  { time: "11:00", from: "otheruser", content: "whats up" },
+  { time: "11:00", from: "jaredtest", content: "whats up" }
 ];
 
 
@@ -89,10 +89,10 @@ const FRIENDS: user[] = [
   styleUrls: ['./ui.component.css'],
 })
 export class UIComponent implements OnInit {
-  servers = SERVERS;
-  messages = MESSAGES;
-  rooms = ROOMS;
-  friends = FRIENDS;
+  servers = [];
+  messages = [];
+  rooms = [];
+  friends = [];
   activeusers = [{ id: 1, name: "testuser" }];
   username = localStorage.getItem('username');
 
@@ -101,20 +101,13 @@ export class UIComponent implements OnInit {
 
 
   ngOnInit(): void {
-    document.getElementById("refresh-chat").addEventListener("click", this.refreshChat, false);
-    document.getElementById("refresh-friends").addEventListener("click", this.refreshServers, false);
-    document.getElementById("refresh-servers").addEventListener("click", this.refreshRooms, false);
-    document.getElementById("refresh-rooms").addEventListener("click", this.refreshFriendsList, false);
-    document.getElementById("add-friend").addEventListener("click", this.addFriend, false);
-    document.getElementById("create-room").addEventListener("click", this.createRoom, false);
-
   }
 
   //TODO GET request to api/messages/chatRefresh -> update messages list
   refreshChat(): void {
     //figure out if the chat is with a friend or with a room
     Array.from(document.getElementsByClassName("selected-list-item")).forEach(element => {
-      var backendresults : Array<backend_message> = []; 
+      var backendresults: Array<backend_message> = [];
       if (element.parentNode.previousSibling.textContent === "Friends") {
         this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/room/chatrefresh", { "name": element.textContent }).subscribe(response => {
           backendresults = response;
@@ -128,21 +121,21 @@ export class UIComponent implements OnInit {
       }
 
       this.messages = [];
-      backendresults.forEach((msg:backend_message) => {
+      backendresults.forEach((msg: backend_message) => {
         var uimessage = new frontend_message();
 
         //HANDLE TIME FORMATTING
-        var seconds : number = (today.getTime() - msg.time.getTime())/1000;
-        if(seconds < 60){
+        var seconds: number = (today.getTime() - msg.time.getTime()) / 1000;
+        if (seconds < 60) {
           uimessage.time = seconds.toString() + " seconds ago";
         }
-        else if(seconds < 3600){
-          uimessage.time = (seconds/60).toString() + " minutes ago";
+        else if (seconds < 3600) {
+          uimessage.time = (seconds / 60).toString() + " minutes ago";
         }
-        else if(seconds < 86400){
-          uimessage.time = (seconds/360).toString() + " hours ago";
+        else if (seconds < 86400) {
+          uimessage.time = (seconds / 360).toString() + " hours ago";
         }
-        else{
+        else {
           uimessage.time = msg.time.toLocaleDateString();
         }
         uimessage.from = msg.username;
@@ -160,24 +153,19 @@ export class UIComponent implements OnInit {
 
 
   refreshServers(): void {
-    Array.from(document.getElementsByClassName("selected-list-item")).forEach(element => {
-      var backendresults : Array<server> = []; 
-      if (element.parentNode.previousSibling.textContent === "Server") {
-        this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/server/list", { "Name": element.textContent }).subscribe(response => {
-          backendresults = response;
+    console.log("refreshed servers");
+        this.http.get<any>(Globals.ip + ":" + Globals.port + "/api/server/list?user="+localStorage.getItem('username')).subscribe(response => {
+          this.servers = [];
+          for(var i = 0 ; i < response.length; i++ ){
+            this.servers.push({id: response[i]._id, name: response[i].Name})
+          }
         });
-      }
-      this.servers = [];
-      backendresults.forEach((serv: server) => {
-        this.servers.push();
-      })
-    });
 
   }
 
   refreshRooms(): void {
     Array.from(document.getElementsByClassName("selected-list-item")).forEach(element => {
-      var backendresults : Array<room> = []; 
+      var backendresults: Array<room> = [];
       if (element.parentNode.previousSibling.textContent === "Room") {
         this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/server/list", { "Name": element.textContent }).subscribe(response => {
           backendresults = response;
@@ -205,10 +193,18 @@ export class UIComponent implements OnInit {
     console.log("create room: " + roomName);
     Array.from(document.getElementsByClassName("selected-list-item")).forEach(element => {
       if (element.parentNode.previousSibling.textContent === "Servers") {
-        this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/room/create", { "server": element.textContent, "name": roomName, "type": "chat", "users" : [{"username": this.username}] }).subscribe(response => {
+        this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/room/create", { "server": element.textContent, "name": roomName, "type": "chat", "users": [{ "username": localStorage.getItem('username') }] }).subscribe(response => {
           console.log(response);
         });
       }
+    });
+  }
+
+  createServer(): void {console.log("create server: ");
+    var serverName = (<HTMLInputElement>document.getElementById("name-server")).value;
+    console.log("create server: " + serverName);
+    this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/server/create", { "Name": serverName, "username": localStorage.getItem('username') }).subscribe(response => {
+      console.log(response);
     });
   }
 

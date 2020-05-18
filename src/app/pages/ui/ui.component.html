@@ -9,8 +9,12 @@
   <div class="row">
     <div class="column left">
       <h3 class="header">Servers
-        <input type="image" id="refresh-servers" class="refresh-right" src="/assets/images/refresh.png" />
+        <input (click)="refreshServers()" type="image" id="refresh-servers" class="refresh-right" src="/assets/images/refresh.png" />
       </h3>
+      <div>
+        <input id="name-server" class="input-text" type="text">
+        <button (click)="createServer()" type="button" class="btn" id="create-server">+</button>
+      </div>
       <ul class="list-group list-group-flush" id="servers">
         <button *ngFor="let server of servers" type="button" class="list-group-item list-group-item-action">
           <span class="rooms-servers-ids">{{server.id}}</span> : {{server.name}}
