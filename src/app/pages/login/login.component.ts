@@ -21,9 +21,9 @@ export class LoginComponent implements OnInit {
     this.http.post<any>(Globals.ip+":"+Globals.port+"/api/security/login",{"username" : form.username, "password" : form.password}).subscribe( response => {
       window.localStorage.setItem("usertoken",response.data.token);
       window.localStorage.setItem("username",response.data.user.username);
-      
+      this.router.navigate(['/ui']);
     });
-    this.router.navigate(['/ui']);
+    
   }
   
 }
