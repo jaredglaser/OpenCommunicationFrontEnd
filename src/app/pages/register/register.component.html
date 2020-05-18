@@ -11,13 +11,16 @@
     <div class="container">
         
         <form #register_form="ngForm" (ngSubmit)="register(register_form.value)">
+            <h2 class="center">Create Account</h2>
+            <label for="username" class="center">Username:</label>
             <div class="form-group center">
-                <h2 class="center">Create Account</h2>
-                <label for="username" class="center">Username:</label>
+                
+                
                 <input name="username" type="text" class="form-control center" id="username" style="width:200px" ngModel>
             </div>
+            <label for="pwd" class="center">Password:</label>
             <div class="form-group center">
-                <label for="pwd" class="center">Password:</label>
+                
                 <input name="password" type="password" class="form-control center" id="pwd" style="width:200px" ngModel>
                 <button id="register" type="submit" class="btn btn-info center">Sign Up</button>
             </div>

@@ -21,7 +21,7 @@ export class RegisterComponent implements OnInit {
     var user = (<HTMLInputElement>document.getElementById("username")).value;
     var pwd = (<HTMLInputElement>document.getElementById("pwd")).value;
     
-    this.http.post<any>(Globals.ip+":"+Globals.port+"/api/security/register",{username : form.controls.username, password : form.controls.pwd}).subscribe( data => {
+    this.http.post<any>(Globals.ip+":"+Globals.port+"/api/security/register",{username : form.username, password : form.pwd}).subscribe( data => {
         alert(JSON.stringify(data));
     })
 
