@@ -10,6 +10,7 @@
 .column {
   float: left;
   padding: 10px;
+  height: 90.75vh;
   max-height: 90.75vh; /* accounts for nav-bar, no scroll in window */
 }
 
@@ -163,6 +164,22 @@
 
   .input-text {
     border-radius: 5px;
+  }
+
+  #send-msg-container {
+    text-align: center;
+  }
+
+  #send-msg-input {
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #send-msg-btn {
+    margin-left: 10px;
+    color: #343a40;
+    background-color: #ffffff
   }
 
   #search-friend {

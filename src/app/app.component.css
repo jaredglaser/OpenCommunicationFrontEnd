@@ -1,7 +1,8 @@
 nav {
-    position: relative;
+  position: relative;
 }
 
 .navbar-nav-right {
-    /*position:absolute;right:0px;*/
-  }
+  position: absolute;
+  right: 0px;
+}

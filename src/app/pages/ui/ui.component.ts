@@ -34,55 +34,6 @@ class backend_message {
   content: String;
 }
 
-const ROOMS: room[] = [
-  { id: 101, name: "myroom", server: 11 },
-  { id: 102, name: "aroom", server: 11 },
-  { id: 103, name: "anotherroom", server: 12 },
-  { id: 104, name: "room4", server: 12 },
-  { id: 105, name: "room5", server: 13 },
-  { id: 106, name: "room6", server: 13 },
-  { id: 107, name: "room7", server: 14 },
-  { id: 108, name: "room8", server: 15 }
-];
-
-const MESSAGES: frontend_message[] = [
-  { time: "11:00", from: "otheruser", content: "whats up" },
-  { time: "11:00", from: "jaredtest", content: "whats up" },
-  { time: "11:00", from: "otheruser", content: "whats up" },
-  { time: "11:00", from: "otheruser", content: "whats up" },
-  { time: "11:00", from: "jaredtest", content: "whats up" },
-  { time: "11:00", from: "jaredtest", content: "whats up" },
-  { time: "11:00", from: "otheruser", content: "whats up" },
-  { time: "11:00", from: "jaredtest", content: "whats up" }
-];
-
-
-const SERVERS: server[] = [
-  { id: 11, name: 'myserver' },
-  { id: 12, name: 'aserver' },
-  { id: 13, name: 'thatserver' },
-  { id: 14, name: 'thisserver' },
-  { id: 15, name: 'anotherserver' }
-];
-
-const FRIENDS: user[] = [
-  { id: 1001, username: 'bestFriend' },
-  { id: 1002, username: 'myFriend' },
-  { id: 1003, username: 'aFriend' },
-  { id: 1004, username: 'pal' },
-  { id: 1005, username: 'someGuy' },
-  { id: 1006, username: 'Dave' },
-  { id: 1007, username: 'randomGuy' },
-  { id: 1008, username: 'anotherOne' },
-  { id: 1009, username: 'dude' },
-  { id: 1010, username: 'someGirl' },
-  { id: 1011, username: 'bro' },
-  { id: 1012, username: 'guy' }
-];
-
-
-
-
 @Component({
   selector: 'app-ui',
   templateUrl: './ui.component.html',
@@ -149,6 +100,13 @@ export class UIComponent implements OnInit {
 
   //TODO GET request to api/messages/friendRefresh ->get current friends list
   refreshFriendsList(): void {
+    console.log("refreshed friends list");
+    this.http.get<any>(Globals.ip + ":" + Globals.port + "/api/messages/friendRefresh?username="+localStorage.getItem('username')).subscribe(response => {
+      this.friends = [];
+      for(var i = 0 ; i < response.length; i++ ){
+        this.friends.push({id: response[i]._id, name: response[i].username})
+      }
+    });
   }
 
 
@@ -226,7 +184,20 @@ export class UIComponent implements OnInit {
     });
   }
 
-
+  sendRoomChat(): void {
+    var roomname;
+    Array.from(document.getElementsByClassName("container darker")).forEach(btn => {
+      if (btn.parentNode.previousSibling.previousSibling.textContent.trim() === "Servers") {
+        roomname = btn.textContent;
+      }
+    });
+    var roomid = this.servers.find(server => server.name === roomname).id;
+    var messageText = (<HTMLInputElement>document.getElementById("send-msg-input")).value;
+    console.log("sent Message: " + messageText);
+    this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/room/sendchat", { "username": this.username, "time": Date.now, "content": messageText, "roomid": roomid},{ headers: {"authorization":localStorage.getItem("usertoken")} }).subscribe(response => {
+      console.log(response);
+    });
+  }
   // Adds active class to current list-item selected
   handleListeners(event) {
     var element = event.target.closest('button');

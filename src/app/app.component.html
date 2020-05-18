@@ -12,6 +12,9 @@
       <li class="nav-item">
         <a class="nav-link" routerLink='home' routerLinkActive='active'>Home</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink='ui' routerLinkActive='active'>Chat</a>
+      </li>
     </ul>
     <!-- If Not Logged In 
     <div *ngIf="!isLoggedIn">-->
@@ -22,27 +25,15 @@
       <li class='nav-item'>
         <a class="nav-link" routerLink='register' routerLinkActive='active'>Create Account</a>
       </li>
+      <li class='nav-item'>
+        <a class="nav-link" id='sign-out' routerLink='login' routerLinkActive='active'>Sign Out</a>
+      </li>
     </ul>
-  <!-- </div>
-    If Logged In 
+  <!-- If Logged In 
     <div *ngIf="isLoggedIn"></div>-->
     <ul  class='navbar-nav navbar-nav-right' id='nav-logged-in'>
-      <li class='nav-item'>
-        <a (click)=signOut() class="nav-link" id='sign-out' routerLink='login' routerLinkActive='active'>Sign-Out</a>
-      </li>
+      
     </ul>
-  <!--</div>
-
-       Once logged in
-    <ul class='navbar-nav navbar-nav-right' [hidden]='!loggedIn'>
-      <li class='nav-item'>
-        <span class='nav-link active'>Hello {{authSvc.CurrentUser|async}}</span>
-      </li>
-      <li class='nav-item'>
-        <a class="nav-link" href="#" (click)='signout()'>Sign Out</a>
-      </li>
-    </ul>
-    -->
   </nav>
   <div class="container-fluid" role="main">
   <router-outlet></router-outlet>
