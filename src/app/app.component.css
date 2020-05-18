@@ -3,13 +3,5 @@ nav {
 }
 
 .navbar-nav-right {
-    position:absolute;right:0px;
+    /*position:absolute;right:0px;*/
   }
-
-#nav-logged-in {
-    visibility: hidden;
-}
-
-#nav-logged-out {
-    visibility: visible;
-}

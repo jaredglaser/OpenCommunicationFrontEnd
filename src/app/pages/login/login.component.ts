@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Globals } from 'src/app/Globals';
+import { Globals} from 'src/app/Globals';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -10,7 +11,7 @@ import { Globals } from 'src/app/Globals';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router){}
 
   ngOnInit(): void {
     
@@ -20,7 +21,9 @@ export class LoginComponent implements OnInit {
     this.http.post<any>(Globals.ip+":"+Globals.port+"/api/security/login",{"username" : form.username, "password" : form.password}).subscribe( response => {
       window.localStorage.setItem("usertoken",response.data.token);
       window.localStorage.setItem("username",response.data.user.username);
-    })
+      
+    });
+    this.router.navigate(['/ui']);
   }
   
 }
