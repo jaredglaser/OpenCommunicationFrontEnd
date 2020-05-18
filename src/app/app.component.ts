@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { UserInfo } from 'src/app/Globals'
 import {Router} from '@angular/router';
 @Component({
   selector: 'app-root',
