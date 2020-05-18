@@ -101,13 +101,6 @@ export class UIComponent implements OnInit {
 
 
   ngOnInit(): void {
-    document.getElementById("refresh-chat").addEventListener("click", this.refreshChat, false);
-    document.getElementById("refresh-friends").addEventListener("click", this.refreshServers, false);
-    document.getElementById("refresh-servers").addEventListener("click", this.refreshRooms, false);
-    document.getElementById("refresh-rooms").addEventListener("click", this.refreshFriendsList, false);
-    document.getElementById("add-friend").addEventListener("click", this.addFriend, false);
-    document.getElementById("create-room").addEventListener("click", this.createRoom, false);
-
   }
 
   //TODO GET request to api/messages/chatRefresh -> update messages list
@@ -161,7 +154,7 @@ export class UIComponent implements OnInit {
 
   refreshServers(): void {
     console.log("refreshed servers");
-        this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/server/list", { "user": localStorage.getItem('username') }).subscribe(response => {
+        this.http.get<any>(Globals.ip + ":" + Globals.port + "/api/server/list?user="+localStorage.getItem('username')).subscribe(response => {
           this.servers = [];
           for(var i = 0 ; i < response.length; i++ ){
             this.servers.push({id: response[i]._id, name: response[i].Name})
