@@ -37,12 +37,12 @@
 
     <div class="column middle">
       <!--Populate this column with current rooms messages-->
-      <h3 class="header" id="header-chat">Chat
-        <input type="image" id="refresh-chat" class="refresh-right" src="/assets/images/refresh.png" />
-      </h3>
+    <h3 class="header" id="header-chat">Chat
+      <input type="image" id="refresh-chat" class="refresh-right" src="/assets/images/refresh.png" />
+    </h3>
 
-      <ng-container *ngFor="let message of messages">
-        <div *ngIf="message.from == username"  class="container darker">
+    <ng-container *ngFor="let message of messages">
+      <div *ngIf="message.from == username"  class="container darker">
         <img src="/assets/images/avatar-penguin.png" alt="Avatar" class="username-left">
         <p>{{message.content}}</p>
         <span class="username-right">{{message.from}}</span>
@@ -53,10 +53,12 @@
         <p>{{message.content}}</p>
         <span class="username-left">{{message.from}}</span>
         <span class="time-right">{{message.time}}</span>
-
       </div>
-
     </ng-container>
+    <div id="send-msg-container">
+      <input id="send-msg-input" class="input-text" type="text">
+      <button type="button" class="btn" id="send-msg-btn">Send</button>
+    </div>
   </div>
     <div class="column right">
       <h3 class="header">Friends
