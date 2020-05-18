@@ -62,7 +62,7 @@
   </div>
     <div class="column right">
       <h3 class="header">Friends
-        <input type="image" id="refresh-friends" class="refresh-right" src="/assets/images/refresh.png" />
+        <input (click)="refreshFriendsList()" type="image" id="refresh-friends" class="refresh-right" src="/assets/images/refresh.png" />
       </h3>
 
       <div>
@@ -73,7 +73,7 @@
       <ul class="list-group list-group-flush" id="friends-list">
         <button *ngFor="let friend of friends" id="friend-username" (click)="handleListeners($event)" type="button"
           class="list-group-item list-group-item-action">
-          <span>{{friend.username}}</span>
+          <span>{{friends.username}}</span>
         </button>
       </ul>
     </div>
