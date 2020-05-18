@@ -172,7 +172,7 @@ export class UIComponent implements OnInit {
     var serverid = this.servers.find(server => server.name === servername).id;
     var friendUsername = (<HTMLInputElement>document.getElementById("search-friend")).value;
     console.log("add friend: " + friendUsername);
-    this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/server/join", { "serverId": serverid, "username": this.username }, { headers: { "authorization": localStorage.getItem("usertoken") } }).subscribe(response => {
+    this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/server/join", { "serverId": serverid, "username": friendUsername }, { headers: { "authorization": localStorage.getItem("usertoken") } }).subscribe(response => {
       this.friends.push(friendUsername);
     });
   }
