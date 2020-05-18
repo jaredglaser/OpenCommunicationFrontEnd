@@ -109,13 +109,13 @@ export class UIComponent implements OnInit {
     Array.from(document.getElementsByClassName("selected-list-item")).forEach(element => {
       var backendresults: Array<backend_message> = [];
       if (element.parentNode.previousSibling.textContent === "Friends") {
-        this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/room/chatrefresh", { "name": element.textContent },{ headers: {"authorization":localStorage.getItem("usertoken")} }).subscribe(response => {
+        this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/room/chatrefresh", { "name": element.textContent }, { headers: { "authorization": localStorage.getItem("usertoken") } }).subscribe(response => {
           backendresults = response;
         });
       }
       else if (element.parentNode.previousSibling.textContent === "Rooms") {
         var today = new Date();
-        this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/messages/chatrefresh", { "username": element.textContent },{ headers: {"authorization":localStorage.getItem("usertoken")} }).subscribe(response => {
+        this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/messages/chatrefresh", { "username": element.textContent }, { headers: { "authorization": localStorage.getItem("usertoken") } }).subscribe(response => {
           backendresults = response;
         });
       }
@@ -154,22 +154,30 @@ export class UIComponent implements OnInit {
 
   refreshServers(): void {
     console.log("refreshed servers");
-        this.http.get<any>(Globals.ip + ":" + Globals.port + "/api/server/list?user="+localStorage.getItem('username'),{ headers: {"authorization":localStorage.getItem("usertoken")} }).subscribe(response => {
-          this.servers = [];
-          for(var i = 0 ; i < response.length; i++ ){
-            this.servers.push({id: response[i]._id, name: response[i].Name})
-          }
-        });
+    this.http.get<any>(Globals.ip + ":" + Globals.port + "/api/server/list?user=" + localStorage.getItem('username'), { headers: { "authorization": localStorage.getItem("usertoken") } }).subscribe(response => {
+      this.servers = [];
+      for (var i = 0; i < response.length; i++) {
+        this.servers.push({ id: response[i]._id, name: response[i].Name })
+      }
+    });
   }
 
   refreshRooms(): void {
-    console.log("refreshed rooms");
-        this.http.get<any>(Globals.ip + ":" + Globals.port + "/api/server/refreshrooms?user="+localStorage.getItem('username'),{ headers: {"authorization":localStorage.getItem("usertoken")} }).subscribe(response => {
-          this.rooms = [];
-          for(var i = 0 ; i < response.length; i++ ){
-            this.rooms.push({id: response[i]._id, name: response[i].Name})
-          }
-        });
+    //get the currently selected server
+    var servername;
+    Array.from(document.getElementsByClassName("selected-list-item")).forEach(btn => {
+      if (btn.parentNode.previousSibling.previousSibling.textContent.trim() === "Servers") {
+        servername = btn.textContent;
+      }
+    });
+    var serverid = this.servers.find(server => server.name === servername).id;
+
+    this.http.get<any>(Globals.ip + ":" + Globals.port + "/api/server/refreshrooms?Name=" + serverid, { headers: { "authorization": localStorage.getItem("usertoken") } }).subscribe(response => {
+      this.rooms = [];
+      for (var i = 0; i < response.length; i++) {
+        this.rooms.push({ id: response[i]._id, name: response[i].name })
+      }
+    });
 
   }
 
@@ -179,7 +187,7 @@ export class UIComponent implements OnInit {
   addFriend(): void {
     var friendUsername = (<HTMLInputElement>document.getElementById("search-friend")).value;
     console.log("add friend: " + friendUsername);
-    this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/messages/addFriend", { "to": friendUsername, "from": this.username},{ headers: {"authorization":localStorage.getItem("usertoken")} }).subscribe(response => {
+    this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/messages/addFriend", { "to": friendUsername, "from": this.username }, { headers: { "authorization": localStorage.getItem("usertoken") } }).subscribe(response => {
       this.friends.push(friendUsername);
     });
   }
@@ -187,28 +195,33 @@ export class UIComponent implements OnInit {
   acceptFriend(): void {
     var friendUsername = (<HTMLInputElement>document.getElementById("search-friend")).value;
     console.log("add friend: " + friendUsername);
-    this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/messages/acceptFriend", { "to": friendUsername, "from": this.username},{ headers: {"authorization":localStorage.getItem("usertoken")} }).subscribe(response => {
+    this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/messages/acceptFriend", { "to": friendUsername, "from": this.username }, { headers: { "authorization": localStorage.getItem("usertoken") } }).subscribe(response => {
       this.friends.push(friendUsername);
     });
   }
 
   //TODO POST request to api/room/create -> create room 
   createRoom(): void {
-    var roomName = (<HTMLInputElement>document.getElementById("search-friend")).value;
+    var roomName = (<HTMLInputElement>document.getElementById("name-room")).value;
     console.log("create room: " + roomName);
-    Array.from(document.getElementsByClassName("selected-list-item")).forEach(element => {
-      if (element.parentNode.previousSibling.textContent === "Servers") {
-        this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/room/create", { "server": element.textContent, "name": roomName, "type": "chat", "users": [{ "username": localStorage.getItem('username') }] },{ headers: {"authorization":localStorage.getItem("usertoken")} }).subscribe(response => {
-          console.log(response);
-        });
+    var servername;
+    Array.from(document.getElementsByClassName("selected-list-item")).forEach(btn => {
+      if (btn.parentNode.previousSibling.previousSibling.textContent.trim() === "Servers") {
+        servername = btn.textContent;
       }
+    });
+    var serverid = this.servers.find(server => server.name === servername).id;
+    this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/room/create", { "serverid": serverid, "name": roomName, "type": "chat" }, { headers: { "authorization": localStorage.getItem("usertoken") } }).subscribe(response => {
+      console.log(response);
+
     });
   }
 
-  createServer(): void {console.log("create server: ");
+  createServer(): void {
+    console.log("create server: ");
     var serverName = (<HTMLInputElement>document.getElementById("name-server")).value;
     console.log("create server: " + serverName);
-    this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/server/create", { "Name": serverName, "username": localStorage.getItem('username') },{ headers: {"authorization":localStorage.getItem("usertoken")} }).subscribe(response => {
+    this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/server/create", { "Name": serverName, "username": localStorage.getItem('username') }, { headers: { "authorization": localStorage.getItem("usertoken") } }).subscribe(response => {
       console.log(response);
     });
   }
@@ -216,32 +229,32 @@ export class UIComponent implements OnInit {
 
   // Adds active class to current list-item selected
   handleListeners(event) {
-        var element = event.target.closest('button');
-        var elementid = element.attributes.id;
-        if (element.parentNode.previousSibling.previousSibling.textContent.trim() === "Servers") {
-          Array.from(document.getElementsByClassName("list-group-item list-group-item-action")).forEach(btn => {
-            console.log("removed class");
-            btn.classList.remove("selected-list-item");
-          })
-          element.classList.add("selected-list-item");
+    var element = event.target.closest('button');
+    var elementid = element.attributes.id;
+    if (element.parentNode.previousSibling.previousSibling.textContent.trim() === "Servers") {
+      Array.from(document.getElementsByClassName("list-group-item list-group-item-action")).forEach(btn => {
+        console.log("removed class");
+        btn.classList.remove("selected-list-item");
+      })
+      element.classList.add("selected-list-item");
+    }
+    else if (element.parentNode.previousSibling.previousSibling.textContent.trim() === "Friends") {
+      Array.from(document.getElementsByClassName("list-group-item list-group-item-action")).forEach(btn => {
+        console.log("removed class");
+        if (btn.parentNode.previousSibling.previousSibling.textContent.trim() !== "Servers") {
+          btn.classList.remove("selected-list-item");
         }
-        else if (element.parentNode.previousSibling.previousSibling.textContent.trim() === "Friends") {
-          Array.from(document.getElementsByClassName("list-group-item list-group-item-action")).forEach(btn => {
-            console.log("removed class");
-            if (btn.parentNode.previousSibling.textContent !== "Servers") {
-              btn.classList.remove("selected-list-item");
-            }
-            element.classList.add("selected-list-item");
-          });
+        element.classList.add("selected-list-item");
+      });
+    }
+    else if (element.parentNode.previousSibling.previousSibling.textContent.trim() === "Rooms") {
+      Array.from(document.getElementsByClassName("list-group-item list-group-item-action")).forEach(btn => {
+        if (btn.parentNode.previousSibling.previousSibling.textContent.trim() !== "Servers") {
+          btn.classList.remove("selected-list-item");
         }
-        else if (element.parentNode.previousSibling.previousSibling.textContent.trim() === "Rooms") {
-          Array.from(document.getElementsByClassName("list-group-item list-group-item-action")).forEach(btn => {
-            if (btn.parentNode.previousSibling.textContent !== "Servers") {
-              btn.classList.remove("selected-list-item");
-            }
-          })
-          element.classList.add("selected-list-item");
-        }
+      })
+      element.classList.add("selected-list-item");
+    }
   }
 }
 

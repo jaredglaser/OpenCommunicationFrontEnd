@@ -22,11 +22,11 @@
       </ul>
 
       <h3 class="header">Rooms
-        <input type="image" id="refresh-rooms" class="refresh-right" src="/assets/images/refresh.png" />
+        <input type="image" (click)="refreshRooms()" id="refresh-rooms" class="refresh-right" src="/assets/images/refresh.png" />
       </h3>
       <div>
         <input id="name-room" class="input-text" type="text">
-        <button type="button" class="btn" id="create-room">+</button>
+        <button (click)="createRoom()" type="button" class="btn" id="create-room">+</button>
       </div>
       <ul class="list-group list-group-flush" id="rooms">
         <button *ngFor="let room of rooms" type="button" (click)="handleListeners($event)" class="list-group-item list-group-item-action">
