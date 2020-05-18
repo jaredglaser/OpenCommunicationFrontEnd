@@ -126,14 +126,14 @@ export class UIComponent implements OnInit {
     console.log("refreshed friends list");
     this.http.get<any>(Globals.ip + ":" + Globals.port + "/api/messages/friendRefresh?username=" + localStorage.getItem('username'),{ headers: { "authorization": localStorage.getItem("usertoken") }}).subscribe(response => {
       this.friends = [];
-      if(response[0].friends != null){
-      for (var i = 0; i < response.friends.length; i++) {
+     /* if(response[0].friends != null){
+      for (var i = 0; i < response[0].friends.length; i++) {
         this.friends.push({ id: response[0]._id, username: response[0].friends[i].username })
       }
-    }
-    if(response[0].friendrequests != null){
-      for (var i = 0; i < response[0].friendrequests.length; i++) {
-        this.friends.push({ id: response[0]._id, username: response[0].friendrequests[i].username, isRequest: true})
+    }*/
+    if(response.friendrequests != null){
+      for (var i = 0; i < response.friendrequests.length; i++) {
+        this.friends.push({ id: response.friendrequests[i]._id, username: response.friendrequests[i].username, isRequest: true})
       }
     }
     });
@@ -191,7 +191,12 @@ export class UIComponent implements OnInit {
     var friendUsername = (<HTMLInputElement>document.getElementById("search-friend")).value;
     console.log("add friend: " + friendUsername);
     this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/messages/addFriend", { "to": friendUsername, "from": this.username }, { headers: { "authorization": localStorage.getItem("usertoken") } }).subscribe(response => {
-      this.friends.push(friendUsername);
+      this.friends = [];
+      for (var i = 0; i < response.length; i++) {
+        this.friends.push({ id: response[i]._id, name: response[i].username })
+        this.friends.push({ id: response[i]._id, username: response[i].friendrequests[i].username })
+      }
+
     });
   }
 
