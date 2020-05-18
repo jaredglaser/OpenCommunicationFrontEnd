@@ -31,7 +31,7 @@
     margin-bottom: auto;
     background-color: #ffffff;
     border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
+    border-bottom-left-radius: 8px; 
   }
 
 
@@ -58,6 +58,7 @@ p {
     margin-top: 30px;
     background-color: #343a40;
     border-radius: 8px;
+    padding: 2px;
 }
 
 .header {
