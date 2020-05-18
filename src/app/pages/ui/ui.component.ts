@@ -57,54 +57,77 @@ export class UIComponent implements OnInit {
   //TODO GET request to api/messages/chatRefresh -> update messages list
   refreshChat(): void {
     //figure out if the chat is with a friend or with a room
+    var backendresults: Array<any> = [];
+    var isFriend;
+    var roomid;
+    var username;
     Array.from(document.getElementsByClassName("selected-list-item")).forEach(element => {
-      var backendresults: Array<backend_message> = [];
-      if (element.parentNode.previousSibling.textContent === "Friends") {
-        this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/room/chatrefresh", { "name": element.textContent }, { headers: { "authorization": localStorage.getItem("usertoken") } }).subscribe(response => {
-          backendresults = response;
-        });
+
+      if (element.parentNode.previousSibling.previousSibling.textContent.trim() === "Friends") {
+        username = element.textContent;
+        isFriend = true;
       }
-      else if (element.parentNode.previousSibling.textContent === "Rooms") {
-        var today = new Date();
-        this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/messages/chatrefresh", { "username": element.textContent }, { headers: { "authorization": localStorage.getItem("usertoken") } }).subscribe(response => {
-          backendresults = response;
-        });
+      else if (element.parentNode.previousSibling.previousSibling.textContent.trim() === "Rooms") {
+
+        roomid = this.rooms.find(room => room.name === element.textContent).id;
+        isFriend = false;
+
       }
-
-      this.messages = [];
-      backendresults.forEach((msg: backend_message) => {
-        var uimessage = new frontend_message();
-
-        //HANDLE TIME FORMATTING
-        var seconds: number = (today.getTime() - msg.time.getTime()) / 1000;
-        if (seconds < 60) {
-          uimessage.time = seconds.toString() + " seconds ago";
-        }
-        else if (seconds < 3600) {
-          uimessage.time = (seconds / 60).toString() + " minutes ago";
-        }
-        else if (seconds < 86400) {
-          uimessage.time = (seconds / 360).toString() + " hours ago";
-        }
-        else {
-          uimessage.time = msg.time.toLocaleDateString();
-        }
-        uimessage.from = msg.username;
-        uimessage.content = msg.content;
-        this.messages.push()
-      });
-
     });
 
+    if (isFriend === true) {
+      this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/messages/chatrefresh", { "username": username }, { headers: { "authorization": localStorage.getItem("usertoken") } }).subscribe(response => {
+        this.setMessages(response);
+      });
+    }
+    else if (isFriend === false) {
+      this.http.get<any>(Globals.ip + ":" + Globals.port + "/api/room/refreshchat?roomid=" + roomid, { headers: { "authorization": localStorage.getItem("usertoken") } }).subscribe(response => {
+        this.setMessages(response);
+      });
+    }
+    else {
+      return;
+    }
+
+
+
+
+  }
+
+  setMessages(backendresults) {
+
+    this.messages = [];
+    backendresults.forEach((msg: any) => {
+      var time;
+      //HANDLE TIME FORMATTING
+      var t = Date.now();
+      var z = Date.parse(msg.time);
+      var seconds: number = (Date.now() - Date.parse(msg.time)) / 1000;
+      if (seconds < 60) {
+        time = seconds.toString() + " seconds ago";
+      }
+      else if (seconds < 3600) {
+        time = (seconds / 60).toString() + " minutes ago";
+      }
+      else if (seconds < 216000) {
+        time = (seconds / 360).toString() + " hours ago";
+      }
+      else {
+        time = msg.time.toLocaleDateString();
+      }
+      var from = msg.username;
+      var content = msg.content;
+      this.messages.push({time:time,from:from,content:content});
+    });
   }
 
   //TODO GET request to api/messages/friendRefresh ->get current friends list
   refreshFriendsList(): void {
     console.log("refreshed friends list");
-    this.http.get<any>(Globals.ip + ":" + Globals.port + "/api/messages/friendRefresh?username="+localStorage.getItem('username')).subscribe(response => {
+    this.http.get<any>(Globals.ip + ":" + Globals.port + "/api/messages/friendRefresh?username=" + localStorage.getItem('username')).subscribe(response => {
       this.friends = [];
-      for(var i = 0 ; i < response.length; i++ ){
-        this.friends.push({id: response[i]._id, name: response[i].username})
+      for (var i = 0; i < response.length; i++) {
+        this.friends.push({ id: response[i]._id, name: response[i].username })
       }
     });
   }
@@ -186,15 +209,15 @@ export class UIComponent implements OnInit {
 
   sendRoomChat(): void {
     var roomname;
-    Array.from(document.getElementsByClassName("container darker")).forEach(btn => {
-      if (btn.parentNode.previousSibling.previousSibling.textContent.trim() === "Servers") {
+    Array.from(document.getElementsByClassName("selected-list-item")).forEach(btn => {
+      if (btn.parentNode.previousSibling.previousSibling.textContent.trim() === "Rooms") {
         roomname = btn.textContent;
       }
     });
-    var roomid = this.servers.find(server => server.name === roomname).id;
+    var roomid = this.rooms.find(room => room.name === roomname).id;
     var messageText = (<HTMLInputElement>document.getElementById("send-msg-input")).value;
     console.log("sent Message: " + messageText);
-    this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/room/sendchat", { "username": this.username, "time": Date.now, "content": messageText, "roomid": roomid},{ headers: {"authorization":localStorage.getItem("usertoken")} }).subscribe(response => {
+    this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/room/sendchat", { "username": this.username, "time": Date.now(), "content": messageText, "roomid": roomid }, { headers: { "authorization": localStorage.getItem("usertoken") } }).subscribe(response => {
       console.log(response);
     });
   }
