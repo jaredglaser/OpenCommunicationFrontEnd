@@ -171,7 +171,7 @@ export class UIComponent implements OnInit {
 
   refreshRooms(): void {
     console.log("refreshed rooms");
-        this.http.get<any>(Globals.ip + ":" + Globals.port + "/api/server/refreshrooms?user="+localStorage.getItem('username'),{ headers: {"authorization":localStorage.getItem("usertoken")} }).subscribe(response => {
+        this.http.get<any>(Globals.ip + ":" + Globals.port + "/api/server/refreshrooms?Name="+localStorage.getItem('username'),{ headers: {"authorization":localStorage.getItem("usertoken")} }).subscribe(response => {
           this.rooms = [];
           for(var i = 0 ; i < response.length; i++ ){
             this.rooms.push({id: response[i]._id, name: response[i].Name})
@@ -220,7 +220,20 @@ export class UIComponent implements OnInit {
     });
   }
 
-
+  sendRoomChat(): void {
+    var roomname;
+    Array.from(document.getElementsByClassName("container darker")).forEach(btn => {
+      if (btn.parentNode.previousSibling.previousSibling.textContent.trim() === "Servers") {
+        roomname = btn.textContent;
+      }
+    });
+    var roomid = this.servers.find(server => server.name === roomname).id;
+    var messageText = (<HTMLInputElement>document.getElementById("send-msg-input")).value;
+    console.log("sent Message: " + messageText);
+    this.http.post<any>(Globals.ip + ":" + Globals.port + "/api/room/sendchat", { "username": this.username, "time": Date.now, "content": messageText, "roomid": roomid},{ headers: {"authorization":localStorage.getItem("usertoken")} }).subscribe(response => {
+      console.log(response);
+    });
+  }
   // Adds active class to current list-item selected
   handleListeners(event) {
         var element = event.target.closest('button');
