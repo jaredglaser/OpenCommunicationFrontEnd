@@ -149,6 +149,13 @@ export class UIComponent implements OnInit {
 
   //TODO GET request to api/messages/friendRefresh ->get current friends list
   refreshFriendsList(): void {
+    console.log("refreshed friends list");
+    this.http.get<any>(Globals.ip + ":" + Globals.port + "/api/messages/friendRefresh?username="+localStorage.getItem('username')).subscribe(response => {
+      this.friends = [];
+      for(var i = 0 ; i < response.length; i++ ){
+        this.friends.push({id: response[i]._id, name: response[i].username})
+      }
+    });
   }
 
 
