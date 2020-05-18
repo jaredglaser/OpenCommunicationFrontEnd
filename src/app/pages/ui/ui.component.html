@@ -22,7 +22,7 @@
       </ul>
 
       <h3 class="header">Rooms
-        <input type="image" id="refresh-rooms" class="refresh-right" src="/assets/images/refresh.png" />
+        <input (click)="refreshRooms()" type="image" id="refresh-rooms" class="refresh-right" src="/assets/images/refresh.png" />
       </h3>
       <div>
         <input id="name-room" class="input-text" type="text">
@@ -57,7 +57,7 @@
     </ng-container>
     <div id="send-msg-container">
       <input id="send-msg-input" class="input-text" type="text">
-      <button type="button" class="btn" id="send-msg-btn">Send</button>
+      <button (click)="sendRoomChat" type="button" class="btn" id="send-msg-btn">Send</button>
     </div>
   </div>
     <div class="column right">
