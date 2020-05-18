@@ -34,55 +34,6 @@ class backend_message {
   content: String;
 }
 
-const ROOMS: room[] = [
-  { id: 101, name: "myroom", server: 11 },
-  { id: 102, name: "aroom", server: 11 },
-  { id: 103, name: "anotherroom", server: 12 },
-  { id: 104, name: "room4", server: 12 },
-  { id: 105, name: "room5", server: 13 },
-  { id: 106, name: "room6", server: 13 },
-  { id: 107, name: "room7", server: 14 },
-  { id: 108, name: "room8", server: 15 }
-];
-
-const MESSAGES: frontend_message[] = [
-  { time: "11:00", from: "otheruser", content: "whats up" },
-  { time: "11:00", from: "jaredtest", content: "whats up" },
-  { time: "11:00", from: "otheruser", content: "whats up" },
-  { time: "11:00", from: "otheruser", content: "whats up" },
-  { time: "11:00", from: "jaredtest", content: "whats up" },
-  { time: "11:00", from: "jaredtest", content: "whats up" },
-  { time: "11:00", from: "otheruser", content: "whats up" },
-  { time: "11:00", from: "jaredtest", content: "whats up" }
-];
-
-
-const SERVERS: server[] = [
-  { id: 11, name: 'myserver' },
-  { id: 12, name: 'aserver' },
-  { id: 13, name: 'thatserver' },
-  { id: 14, name: 'thisserver' },
-  { id: 15, name: 'anotherserver' }
-];
-
-const FRIENDS: user[] = [
-  { id: 1001, username: 'bestFriend' },
-  { id: 1002, username: 'myFriend' },
-  { id: 1003, username: 'aFriend' },
-  { id: 1004, username: 'pal' },
-  { id: 1005, username: 'someGuy' },
-  { id: 1006, username: 'Dave' },
-  { id: 1007, username: 'randomGuy' },
-  { id: 1008, username: 'anotherOne' },
-  { id: 1009, username: 'dude' },
-  { id: 1010, username: 'someGirl' },
-  { id: 1011, username: 'bro' },
-  { id: 1012, username: 'guy' }
-];
-
-
-
-
 @Component({
   selector: 'app-ui',
   templateUrl: './ui.component.html',
